@@ -1,16 +1,18 @@
 import { createBrowserRouter } from "react-router";
 import Root from "../layouts/Root";
+import Home from "../pages/home/Home";
+import ErrorPage from "../pages/shared/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root></Root>,
-        // errorElement: <ErrorPage></ErrorPage>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 index: true,
                 path: '/',
-                element: <h1>home</h1>,
+                element: <Home></Home>,
                 // loader: () => fetch('https://btobridge-server.vercel.app/publicAllProducts'),
                 // hydrateFallbackElement: <Loading></Loading>,
             },

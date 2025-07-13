@@ -6,7 +6,7 @@ const Footer = () => {
         <div className='max-w-[1600px] mx-auto'>
             <div className='flex flex-col gap-4 justify-between items-center px-20 py-20 bg-black'>
                 <Link to='/'>
-                    <img className='h-[36px]' src="https://i.ibb.co/gB5d8mS/blood-connect-black-logo.png" alt="" />
+                    <img className='h-[56px]' src="https://i.ibb.co/gB5d8mS/blood-connect-black-logo.png" alt="" />
                 </Link>
 
                 <div className='flex flex-col lg:flex-row justify-center items-center'>
