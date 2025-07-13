@@ -4,7 +4,6 @@ function App() {
 
   return (
     <>
-
       <h1 className='text-7xl'>Blood Connect HHH </h1>
       <p className='text-3xl text-justify'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum accusantium aliquid soluta, ab facilis nesciunt quae quam? Eaque aliquid sunt at, ipsa similique qui itaque! Corporis itaque libero repellat cupiditate.
 
