@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+.merriweather-font {
+  font-family: "Merriweather", serif;
+}
+
+body {
+  font-family: "Merriweather", serif;
+  color: black;
+  background-color: white;
+}
