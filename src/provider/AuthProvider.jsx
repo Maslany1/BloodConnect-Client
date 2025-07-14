@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWith
 import app from '../firebase/firebase.config';
 
 export const AuthContext = createContext();
+
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
@@ -24,8 +25,8 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    const updateUser = (updatedData) => {
-        return updateProfile(auth.currentUser, updatedData);
+    const updateUserProfile = profileInfo => {
+        return updateProfile(auth.currentUser, profileInfo);
     }
 
     const logOut = () => {
@@ -33,33 +34,43 @@ const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
+        const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
+            setUser(currentuser);
             setLoading(false);
-
-            // if (currentUser) {
-            //     const userData = { email: currentUser.email };
-
-            //     axios.post('https://btobridge-server.vercel.app/jwt', userData, {
-            //         withCredentials: true,
-            //     })
-            //         .then(res => {
-            //             console.log(res.data)
-            //         })
-            //         .catch(error => console.log(error));
-            // }
         });
         return () => {
             unsubscribe();
         };
     }, [])
 
+    // useEffect(() => {
+    //     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    //         setUser(currentUser);
+    //         setLoading(false);
+
+    //         if (currentUser) {
+    //             const userData = { email: currentUser.email };
+
+    //             axios.post('https://btobridge-server.vercel.app/jwt', userData, {
+    //                 withCredentials: true,
+    //             })
+    //                 .then(res => {
+    //                     console.log(res.data)
+    //                 })
+    //                 .catch(error => console.log(error));
+    //         }
+    //     });
+    //     return () => {
+    //         unsubscribe();
+    //     };
+    // }, [])
+
     const authData = {
         user,
         setUser,
         createUser,
         signIn,
-        updateUser,
+        updateUserProfile,
         logOut,
         loading,
         setLoading,

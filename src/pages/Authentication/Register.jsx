@@ -1,26 +1,28 @@
 import React, { use, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-// import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { AuthContext } from '../../provider/AuthProvider';
+import useAxios from '../../hooks/useAxios';
+
 
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
 
+
 const Register = () => {
 
-    // const { createUser, setUser, updateUser, signInWithGoogle } = use(AuthContext);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const password = watch('password');
+    const { createUser, setUser, updateUserProfile } = use(AuthContext);
+    const axiosInstance = useAxios();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
-
-
-
     const [firebaseError, setFirebaseError] = useState("");
     const [profilePic, setProfilePic] = useState('');
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const password = watch('password');
+
 
     const navigate = useNavigate();
 
@@ -47,8 +49,6 @@ const Register = () => {
         (u) => u.district_id === selectedDistrictId
     );
 
-
-
     const handleImageUpload = async (e) => {
         const image = e.target.files[0];
         console.log(image)
@@ -64,96 +64,83 @@ const Register = () => {
 
     }
 
-    console.log(profilePic);
+    // console.log(profilePic);
 
     const onSubmit = data => {
 
         console.log(data);
 
-        // createUser(data.email, data.password)
-        //     .then(async (result) => {
-        //         console.log(result.user);
+        createUser(data.email, data.password)
+            .then(async (result) => {
 
-        //         // update userinfo in the database
-        //         const userInfo = {
-        //             email: data.email,
-        //             role: 'user', // default role
-        //             created_at: new Date().toISOString(),
-        //             last_log_in: new Date().toISOString()
-        //         }
+                const user = result.user;
 
-        //         // const userRes = await axiosInstance.post('/users', userInfo);
-        //         // console.log(userRes.data);
+                // update userinfo in the database
+                const userInfo = {
+                    user_full_name: data.name,
+                    user_email: data.email,
+                    user_photo_url: profilePic,
+                    user_blood_group: data.bloodGroup,
+                    user_district: data.district,
+                    user_upazila: data.upazila,
+                    user_role: 'donor', // default donor
+                    user_status: 'active',  //default active
+                    user_created_at: new Date().toISOString(),
+                    user_last_log_in: new Date().toISOString()
+                }
 
-        //         // update user profile in firebase
-        //         const userProfile = {
-        //             displayName: data.name,
-        //             photoURL: profilePic
-        //         }
-        //         updateUser(userProfile)
-        //             .then(() => {
-        //                 console.log('profile name pic updated');
-        //                 // navigate(from);
-        //             })
-        //             .catch(error => {
-        //                 console.log(error)
-        //             })
+                const userRes = await axiosInstance.post('/allUsers', userInfo);
+                console.log(userRes.data);
 
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     })
+                // update user profile in firebase
+                const userProfile = {
+                    displayName: data.name,
+                    photoURL: profilePic
+                }
+                updateUserProfile(userProfile)
+                    .then(() => {
+                        // console.log('profile name pic updated');
+                        // navigate(from);
+
+                        Swal.fire({
+                            icon: "success",
+                            title: "Registered Successfully !",
+                            showConfirmButton: true,
+                        })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    navigate('/');
+                                }
+                            });
+                    })
+                    .catch(error => {
+                        // console.log(error)
+
+                        Swal.fire({
+                            icon: "error",
+                            title: error.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setFirebaseError(error.message);
+                        setUser(user);
+                    })
+
+            })
+            .catch(error => {
+                // console.error(error);
+                Swal.fire({
+                    icon: "error",
+                    title: error.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                const errorMessage = error.message;
+                setFirebaseError(errorMessage);
+            })
     }
-
-    // const handleRegister = (e) => {
-
-    //     e.preventDefault();
-    //     const userName = e.target.name.value;
-    //     const userEmail = e.target.email.value;
-    //     const userPhoto = e.target.photoUrl.value;
-    //     const userPassword = e.target.password.value;
-
-    //     //name error
-    //     if (userName.length < 5) {
-    //         setNameError("Name should be More than 5 character!");
-    //         return;
-    //     }
-    //     else {
-    //         setNameError("");
-    //     }
-
-    //     //email error
-    //     const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-    //     if (!isValidEmail(userEmail)) {
-    //         setEmailError("Please provide a CORRECT email address !");
-    //         return;
-    //     } else {
-    //         setEmailError("");
-    //     }
-
-    //     //password error
-    //     const errors = [];
-    //     const hasUppercase = (str) => /[A-Z]/.test(str);
-    //     const hasLowercase = (str) => /[a-z]/.test(str);
-
-    //     if (userPassword.length < 6) {
-    //         errors.push("Password should be at least 6 CHARACTERS long !");
-    //     }
-    //     if (!hasUppercase(userPassword)) {
-    //         errors.push("Password should have an UPPERCASE character !");
-    //     }
-    //     if (!hasLowercase(userPassword)) {
-    //         errors.push("Password should have a LOWERCASE character !");
-    //     }
-
-    //     if (errors.length !== 0) {
-    //         setPasswordError(errors);
-    //         return;
-    //     }
-    //     else {
-    //         setPasswordError([]);
-    //     }
 
     //     createUser(userEmail, userPassword)
     //         .then(result => {
@@ -252,10 +239,6 @@ const Register = () => {
                         {errors.bloodGroup && (
                             <p className="text-red-500 text-sm mt-1">{errors.bloodGroup.message}</p>
                         )}
-
-
-                        {/* district and upajilla  */}
-
 
                         {/* District Selector */}
 
