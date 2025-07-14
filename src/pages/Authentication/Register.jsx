@@ -41,7 +41,7 @@ const Register = () => {
     // Watch selected district_id
     const selectedDistrictName = watch('district');
 
-    const selectedDistrict = uniqueDistrict.find((w) => w.name === selectedDistrictName);
+    const selectedDistrict = uniqueDistrict.find((w) => w.name===selectedDistrictName);
     const selectedDistrictId = selectedDistrict?.id;
 
     // Filter upazilas based on selected district_id
@@ -51,7 +51,7 @@ const Register = () => {
 
     const handleImageUpload = async (e) => {
         const image = e.target.files[0];
-        console.log(image)
+        // console.log(image)
 
         const formData = new FormData();
         formData.append('image', image);
@@ -64,11 +64,9 @@ const Register = () => {
 
     }
 
-    // console.log(profilePic);
-
     const onSubmit = data => {
 
-        console.log(data);
+        // console.log(data);
 
         createUser(data.email, data.password)
             .then(async (result) => {
@@ -90,7 +88,7 @@ const Register = () => {
                 }
 
                 const userRes = await axiosInstance.post('/allUsers', userInfo);
-                console.log(userRes.data);
+                // console.log(userRes.data);
 
                 // update user profile in firebase
                 const userProfile = {
@@ -99,9 +97,7 @@ const Register = () => {
                 }
                 updateUserProfile(userProfile)
                     .then(() => {
-                        // console.log('profile name pic updated');
-                        // navigate(from);
-
+                        
                         Swal.fire({
                             icon: "success",
                             title: "Registered Successfully !",
@@ -142,36 +138,6 @@ const Register = () => {
             })
     }
 
-    //     createUser(userEmail, userPassword)
-    //         .then(result => {
-    //             const user = result.user;
-    //             updateUser({ displayName: userName, photoURL: userPhoto })
-    //                 .then(() => {
-    //                     setUser({ ...user, displayName: userName, photoURL: userPhoto });
-
-    //                     Swal.fire({
-    //                         icon: "success",
-    //                         title: "Registered Successfully !",
-    //                         showConfirmButton: true,
-    //                     })
-    //                         .then((result) => {
-    //                             if (result.isConfirmed) {
-    //                                 navigate('/');
-    //                             }
-    //                         });
-    //                 })
-    //                 .catch((error) => {
-    //                     toast.error(`ERROR - ${error.message} `);
-    //                     setFirebaseError(error.message);
-    //                     setUser(user);
-    //                 })
-    //         })
-    //         .catch((error) => {
-    //             toast.error(`ERROR - ${error.message} `);
-    //             const errorMessage = error.message;
-    //             setFirebaseError(errorMessage);
-    //         });
-    // }
 
     return (
         <div className='max-w-[1600px] mx-auto py-20 flex justify-center items-center'>
@@ -179,7 +145,6 @@ const Register = () => {
                 <div className="card-body">
                     <h1 className="text-4xl font-bold text-center">Register now!</h1>
 
-                    {/* onSubmit={handleRegister} */}
                     <form onSubmit={handleSubmit(onSubmit)} className="fieldset">
 
                         {/* name  */}
@@ -201,7 +166,7 @@ const Register = () => {
                         {/* email  */}
                         <label className="label">Email</label>
                         <input
-                            // type="email"
+                            type="email"
                             {...register('email', {
                                 required: 'Email is required !', pattern: {
                                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -314,7 +279,7 @@ const Register = () => {
                         )}
 
                         {
-                            firebaseError && <p className='text-red-600'>{firebaseError}</p>
+                            firebaseError && <p className='text-red-500'>{firebaseError}</p>
                         }
 
                         <button type='submit' className="btn bg-black text-white mt-4">Register</button>
@@ -328,7 +293,6 @@ const Register = () => {
 
                 </div>
             </div>
-            {/* <ToastContainer autoClose={2000} /> */}
         </div>
     );
 };
