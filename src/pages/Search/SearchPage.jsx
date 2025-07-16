@@ -107,29 +107,36 @@ const SearchPage = () => {
             {loading && <loading></loading>}
 
             {!loading && donors.length > 0 && (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {donors.map(donor => (
-                        <div key={donor._id} className="card bg-base-100 shadow-md p-4">
-                            <div className="flex items-center gap-4">
-                                <img src={donor.user_photo_url || "https://i.ibb.co/WRfzKKY/person-avater.png"} alt="avatar" className="w-16 h-16 rounded-full" />
-                                <div>
-                                    <h3 className="font-bold">{donor.user_full_name}</h3>
-                                    <p className="text-sm text-gray-600">{donor.user_email}</p>
+                <div className='min-h-screen'>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {donors.map(donor => (
+                            <div key={donor._id} className="card bg-base-100 shadow-md p-4">
+                                <div className="flex items-center gap-4">
+                                    <img src={donor.user_photo_url || "https://i.ibb.co/WRfzKKY/person-avater.png"} alt="avatar" className="w-16 h-16 rounded-full" />
+                                    <div>
+                                        <h3 className="font-bold">{donor.user_full_name}</h3>
+                                        <p className="text-sm text-gray-600">{donor.user_email}</p>
+                                    </div>
+                                </div>
+                                <div className="mt-4">
+                                    <p><strong>Blood Group:</strong> {donor.user_blood_group}</p>
+                                    <p><strong>District:</strong> {donor.user_district}</p>
+                                    <p><strong>Upazila:</strong> {donor.user_upazila}</p>
+                                    <p><strong>Status:</strong> {donor.user_status}</p>
                                 </div>
                             </div>
-                            <div className="mt-4">
-                                <p><strong>Blood Group:</strong> {donor.user_blood_group}</p>
-                                <p><strong>District:</strong> {donor.user_district}</p>
-                                <p><strong>Upazila:</strong> {donor.user_upazila}</p>
-                                <p><strong>Status:</strong> {donor.user_status}</p>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             )}
 
             {!loading && donors.length === 0 && (
-                <p className="text-center text-gray-500 mt-6">No donors found. Try different criteria.</p>
+                <div className='min-h-screen'>
+                    <p className="text-center text-gray-500 mt-6">No donors found. Try different criteria.
+                        <br />
+                        eg. (Blood Group: A+, District: Comilla, Upazila: Comilla Sadar)
+                    </p>
+                </div>
             )}
         </div>
     );

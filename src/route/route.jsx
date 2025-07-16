@@ -21,6 +21,8 @@ import AllBloodDonationPage from "../pages/Dashboard/AllBloodDonationPage";
 import AdminEditDonationRequest from "../pages/Dashboard/AdminEditDonationRequest";
 import MultiRoleRoute from "../provider/MultiRoleRoute";
 import SearchPage from "../pages/Search/SearchPage";
+import BloodDonationRequest from "../pages/BloodDonationRequest/BloodDonationRequest";
+import HomeDonationRequestDetails from "../pages/HomeDonationRequestDetails/HomeDonationRequestDetails";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
             {
                 path: 'search',
                 element: <SearchPage></SearchPage>,
+            },
+            {
+                path: 'blood-donation-request',
+                element: <BloodDonationRequest></BloodDonationRequest>,
+            },
+            {
+                path: 'home-donation-request-details/:id',
+                element: <PrivateRoute><HomeDonationRequestDetails></HomeDonationRequestDetails></PrivateRoute>,
             },
             {
                 path: "/login",

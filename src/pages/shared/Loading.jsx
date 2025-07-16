@@ -19,7 +19,6 @@ const Loading = () => {
                 &nbsp;&nbsp;&nbsp; Please wait for a moment ! &nbsp;&nbsp;&nbsp;
                 <span className="loading loading-spinner loading-xl"></span>
             </p>
-
         </div>
     );
 };

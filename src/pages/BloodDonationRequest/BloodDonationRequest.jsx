@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useAxios from '../../hooks/useAxios';
+import Loading from '../shared/Loading';
 
 const BloodDonationRequest = () => {
   const axiosInstance = useAxios();
@@ -11,7 +12,7 @@ const BloodDonationRequest = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const res = await axiosInstance.get('/donation-requests?status=pending');
+        const res = await axiosInstance.get('/public-donation-requests?status=pending');
         setRequests(res.data);
       } catch (err) {
         console.error('Error fetching donation requests:', err);
@@ -24,15 +25,15 @@ const BloodDonationRequest = () => {
   }, [axiosInstance]);
 
   const handleViewDetails = (id) => {
-    navigate(`/donation-details/${id}`);
+    navigate(`/home-donation-request-details/${id}`);
   };
 
-  if (loading) return <p className="text-center py-10">Loading donation requests...</p>;
+  if (loading) return <Loading></Loading>;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 text-center">Pending Blood Donation Requests 🩸</h2>
-
+        
       {requests.length === 0 ? (
         <p className="text-center text-gray-500">No pending requests found.</p>
       ) : (
