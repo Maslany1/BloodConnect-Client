@@ -75,7 +75,7 @@ const Register = () => {
                 // update userinfo in the database
                 const userInfo = {
                     user_full_name: data.name,
-                    user_email: data.email,
+                    user_email: data.email.toLowerCase(),
                     user_photo_url: profilePic,
                     user_blood_group: data.bloodGroup,
                     user_district: data.district,

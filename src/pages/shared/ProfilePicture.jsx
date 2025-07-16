@@ -28,7 +28,7 @@ const ProfilePicture = () => {
         <div className="dropdown dropdown-center md:dropdown-end">
             <div tabIndex={0} role="button" className="m-1">
                 <div className="tooltip tooltip-left" data-tip={user.displayName}>
-                    <img className="w-[40px] h-[40px] rounded-full border-2 border-green-500" src={`${user.photoURL ? user.photoURL : "https://i.ibb.co/bjvNNZsL/developer-512.jpg"}`} alt="" />
+                    <img className="w-[40px] h-[40px] rounded-full border-2 border-zinc-400" src={`${user.photoURL ? user.photoURL : "https://i.ibb.co/bjvNNZsL/developer-512.jpg"}`} alt="" />
                 </div>
             </div>
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
