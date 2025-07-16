@@ -5,8 +5,8 @@ const NavLinks = () => {
     return (
         <div className='flex flex-col lg:flex-row justify-center items-center'>
             <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/">Home</NavLink>
-            {/* <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/categories/all">Categories</NavLink>
-            <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/add">Add</NavLink>
+            <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/search">Search</NavLink>
+            {/* <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/add">Add</NavLink>
             <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/allProducts">All Products</NavLink>
             <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/myProducts">My Products</NavLink>
             <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/cart">Cart Page</NavLink> */}

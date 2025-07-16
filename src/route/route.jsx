@@ -19,6 +19,8 @@ import AdminRoute from "../provider/AdminRoute";
 import AllUsersPage from "../pages/Dashboard/AllUsersPage";
 import AllBloodDonationPage from "../pages/Dashboard/AllBloodDonationPage";
 import AdminEditDonationRequest from "../pages/Dashboard/AdminEditDonationRequest";
+import MultiRoleRoute from "../provider/MultiRoleRoute";
+import SearchPage from "../pages/Search/SearchPage";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
                 element: <Home></Home>,
                 // loader: () => fetch('https://btobridge-server.vercel.app/publicAllProducts'),
                 // hydrateFallbackElement: <Loading></Loading>,
+            },
+            {
+                path: 'search',
+                element: <SearchPage></SearchPage>,
             },
             {
                 path: "/login",
@@ -87,7 +93,10 @@ const router = createBrowserRouter([
             },
             {
                 path: 'all-blood-donation-request',
-                element: <AdminRoute><AllBloodDonationPage></AllBloodDonationPage></AdminRoute>,
+                element: <MultiRoleRoute allowedRoles={['admin', 'volunteer']}>
+                    <AllBloodDonationPage></AllBloodDonationPage>
+                </MultiRoleRoute>,
+                // element: <AdminRoute><AllBloodDonationPage></AllBloodDonationPage></AdminRoute>,
             },
             {
                 path: 'admin-edit-donation/:id',

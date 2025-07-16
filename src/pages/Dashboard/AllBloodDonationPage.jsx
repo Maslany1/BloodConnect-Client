@@ -3,17 +3,22 @@ import useAxios from '../../hooks/useAxios';
 import Swal from 'sweetalert2';
 import { FaEye, FaTrash, FaEdit } from 'react-icons/fa';
 import { Link } from 'react-router';
-import { use } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
+import useUserRole from '../../hooks/useUserRole';
+import Loading from '../shared/Loading';
 
 const AllBloodDonationPage = () => {
-    const {user} = use(AuthContext);
+    const { user } = useContext(AuthContext);
+    const { role, loading: roleLoading } = useUserRole(user?.email);
+
     const axiosInstance = useAxios();
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
     const [selectedRequest, setSelectedRequest] = useState(null);
+    const [filter, setFilter] = useState("all");
 
     useEffect(() => {
         fetchDonations();
@@ -29,6 +34,10 @@ const AllBloodDonationPage = () => {
             setLoading(false);
         }
     };
+
+    if (roleLoading) {
+        return <Loading />;
+    }
 
     const handleStatusChange = async (id, newStatus) => {
         try {
@@ -60,17 +69,36 @@ const AllBloodDonationPage = () => {
         }
     };
 
+    const filteredDonations = filter === 'all'
+        ? donations
+        : donations.filter(donation => donation.donation_status === filter);
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentDonations = donations.slice(indexOfFirstItem, indexOfLastItem);
+    const currentDonations = filteredDonations.slice(indexOfFirstItem, indexOfLastItem);
 
-    const totalPages = Math.ceil(donations.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredDonations.length / itemsPerPage);
 
     if (loading) return <p>Loading...</p>;
 
     return (
         <div className="p-4">
             <h2 className="text-3xl font-bold mb-6">All Blood Donation Requests</h2>
+
+            <div className="mb-4">
+                <select
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    className="select select-bordered"
+                >
+                    <option value="all">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="inprogress">In Progress</option>
+                    <option value="done">Done</option>
+                    <option value="canceled">Canceled</option>
+                </select>
+            </div>
+
             <div className="overflow-x-auto">
                 <table className="table table-zebra w-full">
                     <thead>
@@ -80,8 +108,8 @@ const AllBloodDonationPage = () => {
                             <th>Location</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Blood Group</th>
-                            <th>Status</th>
+                            <th className='text-center'>Blood Group</th>
+                            <th className='text-center'>Status</th>
                             <th>Donor Info</th>
                             <th>Actions</th>
                         </tr>
@@ -94,7 +122,7 @@ const AllBloodDonationPage = () => {
                                 <td>{donation.recipient_district}, {donation.recipient_upazila}</td>
                                 <td>{donation.donation_date}</td>
                                 <td>{donation.donation_time}</td>
-                                <td>{donation.blood_group}</td>
+                                <td className='text-center'>{donation.blood_group}</td>
                                 <td>
                                     <select
                                         className="select select-bordered select-sm"
@@ -119,12 +147,16 @@ const AllBloodDonationPage = () => {
                                     <button className="btn btn-sm" onClick={() => setSelectedRequest(donation)}>
                                         <FaEye />
                                     </button>
-                                    <Link to={`/dashboard/admin-edit-donation/${donation._id}`} className="btn btn-sm">
-                                        <FaEdit />
-                                    </Link>
-                                    <button className="btn btn-sm btn-error" onClick={() => handleDelete(donation._id)}>
-                                        <FaTrash />
-                                    </button>
+                                    {role === 'admin' && <>
+                                        <Link to={`/dashboard/admin-edit-donation/${donation._id}`} className="btn btn-sm">
+                                            <FaEdit />
+                                        </Link>
+
+                                        <button className="btn btn-sm btn-error" onClick={() => handleDelete(donation._id)}>
+                                            <FaTrash />
+                                        </button>
+                                    </>
+                                    }
                                 </td>
                             </tr>
                         ))}
@@ -146,10 +178,9 @@ const AllBloodDonationPage = () => {
                 </div>
             </div>
 
-            {/* DaisyUI Modal */}
             {selectedRequest && (
-                <dialog id="donationModal" className="modal modal-open">
-                    <form method="dialog" className="modal-box">
+                <div className="modal modal-open">
+                    <div className="modal-box">
                         <h3 className="font-bold text-lg mb-2">Donation Details</h3>
                         <p><strong>Recipient Name:</strong> {selectedRequest.recipient_name}</p>
                         <p><strong>Location:</strong> {selectedRequest.recipient_district}, {selectedRequest.recipient_upazila}</p>
@@ -159,11 +190,17 @@ const AllBloodDonationPage = () => {
                         <p><strong>Donation Date & Time:</strong> {selectedRequest.donation_date} at {selectedRequest.donation_time}</p>
                         <p><strong>Status:</strong> {selectedRequest.donation_status}</p>
                         <div className="modal-action">
-                            <button className="btn" onClick={() => setSelectedRequest(null)}>Close</button>
+                            <button
+                                className="btn"
+                                onClick={() => setSelectedRequest(null)}
+                            >
+                                Close
+                            </button>
                         </div>
-                    </form>
-                </dialog>
+                    </div>
+                </div>
             )}
+
         </div>
     );
 };

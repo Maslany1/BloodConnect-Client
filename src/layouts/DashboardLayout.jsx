@@ -80,7 +80,7 @@ const DashboardLayout = () => {
                             </NavLink>
                         </li>
                     </>}
-                    
+
                     {/* admin pages */}
                     {!loading && role === 'admin' && <>
 
@@ -100,8 +100,8 @@ const DashboardLayout = () => {
                     {!loading && role === 'volunteer' && <>
 
                         <li>
-                            <NavLink to="/dashboard/">
-                                All Users
+                            <NavLink to="/dashboard/all-blood-donation-request">
+                                All Blood Donation Request
                             </NavLink>
                         </li>
                         <li>

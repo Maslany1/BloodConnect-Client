@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from '../../hooks/useAxios';
-import { FaUserShield, FaUserCheck, FaUserSlash, FaTrashAlt } from 'react-icons/fa';
+import { FaUserShield, FaUserCheck, FaUserSlash, FaTrashAlt, FaEye } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const USERS_PER_PAGE = 5;
@@ -11,6 +11,7 @@ const AllUsersPage = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState('all');
+    const [selectedRequest, setSelectedRequest] = useState(null);
 
     useEffect(() => {
         fetchUsers();
@@ -139,8 +140,13 @@ const AllUsersPage = () => {
                                     )}
                                 </td>
                                 <td className='text-center'>
+
+                                    <button className="btn btn-sm mr-2" onClick={() => setSelectedRequest(user)}>
+                                        <FaEye />
+                                    </button>
+
                                     <button
-                                        className="btn btn-xs btn-outline btn-error"
+                                        className="btn btn-sm btn-outline btn-error"
                                         onClick={() => handleDelete(user._id)}
                                     >
                                         <FaTrashAlt />
@@ -164,6 +170,45 @@ const AllUsersPage = () => {
                     </button>
                 ))}
             </div>
+
+            {selectedRequest && (
+                <div className="modal modal-open">
+                    <div className="modal-box">
+
+                        <div className="card bg-base-100 shadow-sm">
+                            <figure className="px-10 pt-10">
+                                <img
+                                    src={selectedRequest.user_photo_url}
+                                    alt="Shoes"
+                                    className="rounded-xl w-32" />
+                            </figure>
+                            <div className="card-body items-center text-center">
+                                <h2 className="card-title">{selectedRequest.user_full_name}</h2>
+                            </div>
+                            <div className='p-4'>
+                                <p><strong>User Name:</strong> {selectedRequest.user_full_name}</p>
+                                <p><strong>User Email:</strong> {selectedRequest.user_email}</p>
+                                <p><strong>Blood Group:</strong> {selectedRequest.user_blood_group}</p>
+
+
+                                <p><strong>Location:</strong> {selectedRequest.user_district}, {selectedRequest.user_upazila}</p>
+
+                                <p><strong>User Role:</strong> {selectedRequest.user_role}</p>
+                                <p><strong>User Status:</strong> {selectedRequest.user_status}</p>
+                            </div>
+
+                            <div className="modal-action">
+                                <button
+                                    className="btn m-4"
+                                    onClick={() => setSelectedRequest(null)}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
