@@ -13,6 +13,10 @@ import DonorDashboard from "../pages/Dashboard/DonorDashboard";
 import MyDonationRequests from "../pages/Dashboard/MyDonationRequests";
 import DonationRequestDetails from "../pages/Dashboard/DonationRequestDetails";
 import EditDonationRequest from "../pages/Dashboard/EditDonationRequest";
+import Forbidden from "../pages/shared/Forbidden";
+import DonorRoute from "../provider/DonorRoute";
+import AdminRoute from "../provider/AdminRoute";
+import AllUsersPage from "../pages/Dashboard/AllUsersPage";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register></Register>,
+            },
+            {
+                path: '/forbidden',
+                element: <Forbidden></Forbidden>,
             }
         ]
     },
@@ -54,22 +62,27 @@ const router = createBrowserRouter([
                 element: <Profile></Profile>
             },
             {
+                path: 'my-donation-requests',
+                element: <DonorRoute><MyDonationRequests></MyDonationRequests></DonorRoute>, 
+            },
+            {
                 path:'create-donation-request',
-                element: <CreateDonationRequest></CreateDonationRequest>,
+                element: <DonorRoute><CreateDonationRequest></CreateDonationRequest></DonorRoute>,
                 // loader: () => fetch('http://localhost:3000/allUsers'),
                 // hydrateFallbackElement: <Loading></Loading>,
             },
-            {
-                path: 'my-donation-requests',
-                element: <MyDonationRequests></MyDonationRequests>
-            },
+            
             {
                 path: 'donation-details/:id',
-                element: <DonationRequestDetails></DonationRequestDetails>
+                element: <DonorRoute><DonationRequestDetails></DonationRequestDetails></DonorRoute>,
             },
             {
                 path: 'edit-donation-request/:id',
-                element: <EditDonationRequest></EditDonationRequest>
+                element: <DonorRoute><EditDonationRequest></EditDonationRequest></DonorRoute>,
+            },
+            {
+                path: 'all-user',
+                element: <AdminRoute><AllUsersPage></AllUsersPage></AdminRoute>,
             },
 
 

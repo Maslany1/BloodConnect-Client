@@ -1,7 +1,21 @@
 import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
+import useUserRole from '../hooks/useUserRole';
+import { use } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
+import Loading from '../pages/shared/Loading';
 
 const DashboardLayout = () => {
+
+    const { user } = use(AuthContext);
+
+    const { role, loading } = useUserRole(user?.email);
+
+    if (loading) {
+        return <Loading></Loading>;
+    }
+    console.log("role -donor", role);
+
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -51,17 +65,39 @@ const DashboardLayout = () => {
                             Profile
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/dashboard/my-donation-requests">
-                            My Donation Requests
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/create-donation-request">
-                            Create Donation Request
-                        </NavLink>
-                    </li>
-                    
+
+                    {/* donor pages */}
+                    {!loading && role === 'donor' && <>
+
+                        <li>
+                            <NavLink to="/dashboard/my-donation-requests">
+                                My Donation Requests
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/create-donation-request">
+                                Create Donation Request
+                            </NavLink>
+                        </li>
+                    </>}
+                    {/* admin pages */}
+                    {!loading && role === 'admin' && <>
+
+                        <li>
+                            <NavLink to="/dashboard/all-user">
+                                All Users
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/">
+                                Create Donation
+                            </NavLink>
+                        </li>
+                    </>}
+
+
+
+
                 </ul>
             </div>
         </div>

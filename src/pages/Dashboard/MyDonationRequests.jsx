@@ -98,6 +98,7 @@ const MyDonationRequests = () => {
                             <th>Time</th>
                             <th>Blood Group</th>
                             <th>Status</th>
+                            <th>Donor Info</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -110,6 +111,14 @@ const MyDonationRequests = () => {
                                 <td>{req.donation_time}</td>
                                 <td>{req.blood_group}</td>
                                 <td className="capitalize">{req.donation_status}</td>
+                                <td>
+                                    {req.donation_status === 'inprogress' && (
+                                        <div>
+                                            <p>{user.displayName}</p>
+                                            <p className="text-sm">{user.email}</p>
+                                        </div>
+                                    )}
+                                </td>
                                 <td className="flex gap-1 flex-wrap">
                                     {req.donation_status === 'inprogress' && (
                                         <>

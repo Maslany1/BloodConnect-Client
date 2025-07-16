@@ -134,16 +134,6 @@ const Profile = () => {
                 </div>
 
                 <div>
-                    <label className="label">Blood Group</label>
-                    <select {...register('user_blood_group', { required: true })} className="select select-bordered w-full" disabled={!editMode}>
-                        <option value="">Select</option>
-                        {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(group => (
-                            <option key={group} value={group}>{group}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div>
                     <label className="label">District</label>
                     <select {...register('user_district', { required: true })} className="select select-bordered w-full" disabled={!editMode}>
                         <option value="">Select District</option>
@@ -159,6 +149,16 @@ const Profile = () => {
                         <option value="">Select Upazila</option>
                         {filteredUpazilas.map(u => (
                             <option key={u.id} value={u.name}>{u.name}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className='col-span-2'>
+                    <label className="label">Blood Group</label>
+                    <select {...register('user_blood_group', { required: true })} className="select select-bordered w-full" disabled={!editMode}>
+                        <option value="">Select</option>
+                        {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(group => (
+                            <option key={group} value={group}>{group}</option>
                         ))}
                     </select>
                 </div>

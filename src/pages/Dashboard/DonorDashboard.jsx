@@ -89,8 +89,8 @@ const DonorDashboard = () => {
                     <td>
                       {req.donation_status === 'inprogress' && (
                         <div>
-                          <p>{user.displayName}</p>
-                          <p className="text-sm">{user.email}</p>
+                          <p>{user?.displayName}</p>
+                          <p className="text-sm">{user?.email}</p>
                         </div>
                       )}
                     </td>

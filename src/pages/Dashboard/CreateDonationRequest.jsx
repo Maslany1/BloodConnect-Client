@@ -25,15 +25,15 @@ const CreateDonationRequest = () => {
 
     useEffect(() => {
         if (user) {
-            setValue('requester_name', user.displayName);
-            setValue('requester_email', user.email);
+            setValue('requester_name', user?.displayName);
+            setValue('requester_email', user?.email);
         }
     }, [user, setValue]);
 
     const selectedDistrict = districts.find(d => d.name === watch('recipient_district'));
     const filteredUpazilas = upazilas.filter(u => u.district_id === selectedDistrict?.id);
 
-    const { status, loading } = useUserStatus(user.email);
+    const { status, loading } = useUserStatus(user?.email);
     if (loading) return <p>Checking user status...</p>;
 
     // console.log(status,loading);
