@@ -1,11 +1,23 @@
 import React from 'react';
+import useUserRole from '../../hooks/useUserRole';
+import Loading from '../shared/Loading';
+import DonorDashboard from './DonorDashboard';
+import { use } from 'react';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const DashboardHome = () => {
-    return (
-        <div>
-            Dashboard Home
-        </div>
-    );
+
+    const {user} = use(AuthContext);
+
+    const { role, roleLoading } = useUserRole(user.email);
+
+    if (roleLoading) {
+        return <Loading></Loading>
+    }
+
+    if(role === 'donor'){
+        return <DonorDashboard></DonorDashboard>
+    }
 };
 
 export default DashboardHome;
