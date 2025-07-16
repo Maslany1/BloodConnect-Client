@@ -2,11 +2,12 @@ import React from 'react';
 import { Outlet, useNavigation } from 'react-router';
 import NavBar from '../pages/shared/NavBar';
 import Footer from '../pages/shared/Footer';
+import Loading from '../pages/shared/Loading';
 
 
 const Root = () => {
 
-    // const { state } = useNavigation();
+    const { state } = useNavigation();
 
     return (
         <div>
@@ -15,8 +16,7 @@ const Root = () => {
             </header>
 
             <main>
-                {/* {state == "loading" ? <Loading></Loading> : <Outlet></Outlet>} */}
-                <Outlet></Outlet>
+                {state == "loading" ? <Loading></Loading> : <Outlet></Outlet>}
             </main>
 
             <footer>

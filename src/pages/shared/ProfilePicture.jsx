@@ -1,6 +1,7 @@
 import React, { use } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const ProfilePicture = () => {
 
@@ -14,6 +15,12 @@ const ProfilePicture = () => {
                 navigate('/');
             }).catch((error) => {
                 // toast.error(`ERROR - ${error.message} `);
+                Swal.fire({
+                    icon: "error",
+                    title: error.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             });
     }
 
@@ -26,7 +33,14 @@ const ProfilePicture = () => {
             </div>
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                 {/* <li><p className='btn btn-outline  btn-neutral btn-active mb-2'>{user.displayName ? user.displayName : "¯\\_(ツ)_/¯"}</p></li> */}
-                <li><p className='btn btn-neutral btn-outline hover:text-white mb-2' onClick={handleLogOut}>Dashboard</p></li>
+                {
+                    user && <Link to='/dashboard'><li>
+
+                        <p className='btn btn-neutral btn-outline hover:text-white mb-2 w-full'>Dashboard</p>
+
+                    </li></Link>
+                }
+
                 <li><p className='btn btn-error btn-outline hover:text-white' onClick={handleLogOut}>Logout</p></li>
             </ul>
         </div>
