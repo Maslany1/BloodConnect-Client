@@ -7,6 +7,8 @@ import Register from "../pages/Authentication/Register";
 import DashboardLayout from "../layouts/DashboardLayout";
 import PrivateRoute from "../provider/PrivateRoute";
 import Profile from "../pages/Dashboard/Profile";
+import DashboardHome from "../pages/Dashboard/DashboardHome";
+import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest";
 
 const router = createBrowserRouter([
     {
@@ -39,9 +41,19 @@ const router = createBrowserRouter([
 
         children: [
             {
+                index: true,
+                element: <DashboardHome></DashboardHome>
+            },
+            {
                 path: 'profile',
                 element: <Profile></Profile>
-            }
+            },
+            {
+                path:'create-donation-request',
+                element: <CreateDonationRequest></CreateDonationRequest>,
+                // loader: () => fetch('http://localhost:3000/allUsers'),
+                // hydrateFallbackElement: <Loading></Loading>,
+            },
         ]
     },
     // {

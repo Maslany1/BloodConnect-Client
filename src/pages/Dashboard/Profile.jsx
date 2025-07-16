@@ -76,7 +76,7 @@ const Profile = () => {
 
         data.user_photo_url = profilePic;
 
-        console.log(data);
+        // console.log(data);
 
         try {
             const res = await axiosInstance.put(`/allUsers/${user._id}`, data);
