@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useAxios from '../../hooks/useAxios';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
+import Loading from '../shared/Loading';
 
 const SearchPage = () => {
     const axiosInstance = useAxios();
@@ -104,7 +105,7 @@ const SearchPage = () => {
                 <button type="submit" className="btn btn-primary col-span-full md:col-span-3">Search</button>
             </form>
 
-            {loading && <loading></loading>}
+            {loading && <Loading></Loading>}
 
             {!loading && donors.length > 0 && (
                 <div className='min-h-screen'>

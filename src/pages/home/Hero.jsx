@@ -2,8 +2,11 @@ import React from 'react';
 import Lottie from "lottie-react";
 import hero_logo from "../../assets/blood_hero.json"
 import { Link } from 'react-router';
+import { use } from 'react';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const Hero = () => {
+    const { user } = use(AuthContext);
     return (
         <div className='flex flex-col-reverse lg:flex-row justify-between items-center p-4 lg:p-4 mb-12'>
             <div className='w-full lg:w-2/3'>
@@ -14,9 +17,13 @@ const Hero = () => {
                     <p> Join our mission to save lives — one donor, one drop, one heartbeat at a time. <br /> Make a difference. Be someone's reason to smile again.</p>
                 </div>
                 <div className='flex justify-start items-center gap-4'>
-                    <Link to="/register">
-                        <button className='mr-6 border-2 border-[#ff4136] hover:border-[#333333] hover:cursor-pointer font-bold text-xl px-6 py-3 rounded-sm bg-[#ff4136]'>Join as a donor</button>
-                    </Link>
+                    {
+                        !user && <>
+                            <Link to="/register">
+                                <button className='mr-6 border-2 border-[#ff4136] hover:border-[#333333] hover:cursor-pointer font-bold text-xl px-6 py-3 rounded-sm bg-[#ff4136]'>Join as a donor</button>
+                            </Link>
+                        </>
+                    }
 
                     <Link to="/search">
                         <button className='mr-6 border-2 border-[#ff4136] hover:border-[#333333] hover:cursor-pointer font-bold text-xl px-6 py-3 rounded-sm bg-[#ff4136]'>Search Donors</button>

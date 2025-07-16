@@ -4,6 +4,7 @@ import useUserRole from '../hooks/useUserRole';
 import { use } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 import Loading from '../pages/shared/Loading';
+import ProfilePicture from '../pages/shared/ProfilePicture';
 
 const DashboardLayout = () => {
 
@@ -40,6 +41,7 @@ const DashboardLayout = () => {
                         </label>
                     </div>
                     <div className="mx-2 flex-1 px-2">Dashboard</div>
+                    <ProfilePicture></ProfilePicture>
                 </div>
 
                 <Outlet></Outlet>
@@ -56,7 +58,7 @@ const DashboardLayout = () => {
                     </li>
 
                     <li>
-                        <NavLink to="/dashboard">
+                        <NavLink to="/dashboard" end>
                             Home
                         </NavLink>
                     </li>
@@ -98,17 +100,16 @@ const DashboardLayout = () => {
 
                     {/* volunteer pages */}
                     {!loading && role === 'volunteer' && <>
-
                         <li>
                             <NavLink to="/dashboard/all-blood-donation-request">
                                 All Blood Donation Request
                             </NavLink>
                         </li>
-                        <li>
+                        {/* <li>
                             <NavLink to="/dashboard/">
                                 All Blood
                             </NavLink>
-                        </li>
+                        </li> */}
                     </>}
                 </ul>
             </div>

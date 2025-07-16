@@ -112,8 +112,14 @@ const Profile = () => {
 
     return (
         <div className="max-w-3xl mx-auto py-10 px-4">
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Your Profile</h2>
+            <div className="flex justify-between items-start mb-4">
+                {/* <h2 className="text-2xl font-bold">{user.user_full_name} - Profile</h2> */}
+
+                <div></div>
+
+                <img src={profilePic} alt="avatar" className="w-48 h-48 mt-2 rounded-full border-2 border-zinc-400 mb-8" />
+
+
                 <button
                     onClick={() => setEditMode(!editMode)}
                     className="btn btn-sm btn-primary"
@@ -122,8 +128,8 @@ const Profile = () => {
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className='w-full'>
                     <label className="label">Full Name</label>
                     <input type="text" className="input input-bordered w-full" {...register('user_full_name', { required: true })} disabled={!editMode} />
                 </div>
@@ -163,21 +169,21 @@ const Profile = () => {
                     </select>
                 </div>
 
-                <div className="md:col-span-2">
-                    <label className="label">Profile Photo  {editMode && <> ( Max size 32MB ) </>}</label>
+                <div className="col-span-2">
+                    <label className="label">  {editMode && <> Profile Photo ( Max size 32MB ) </>}</label>
 
                     <input type="file" onChange={handleImageUpload} className={`input-bordered w-full file-input ${editMode ? " " : "hidden"} `} disabled={!editMode} />
 
                     {/* <input type="text" className="input input-bordered w-full" {...register('user_photo_url')} disabled={!editMode} /> */}
 
-                    <img src={profilePic} alt="avatar" className="w-20 h-20 mt-2 rounded-full" />
+                    {/* <img src={profilePic} alt="avatar" className="w-20 h-20 mt-2 rounded-full" /> */}
                 </div>
 
-                {editMode && (
-                    <div className="md:col-span-2">
+                {editMode && <>
+                    <div className="col-span-2">
                         <button type="submit" className="btn btn-success">Save Changes</button>
                     </div>
-                )}
+                </>}
             </form>
         </div>
     );
