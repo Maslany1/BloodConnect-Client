@@ -56,6 +56,11 @@ const DashboardLayout = () => {
                             Create Donation Request
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/dashboard/my-donation-requests">
+                            My Donation Requests
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         </div>

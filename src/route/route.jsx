@@ -9,6 +9,8 @@ import PrivateRoute from "../provider/PrivateRoute";
 import Profile from "../pages/Dashboard/Profile";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest";
+import DonorDashboard from "../pages/Dashboard/DonorDashboard";
+import MyDonationRequests from "../pages/Dashboard/MyDonationRequests";
 
 const router = createBrowserRouter([
     {
@@ -42,7 +44,8 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <DashboardHome></DashboardHome>
+                // element: <DashboardHome></DashboardHome>
+                element: <DonorDashboard></DonorDashboard>
             },
             {
                 path: 'profile',
@@ -53,6 +56,10 @@ const router = createBrowserRouter([
                 element: <CreateDonationRequest></CreateDonationRequest>,
                 // loader: () => fetch('http://localhost:3000/allUsers'),
                 // hydrateFallbackElement: <Loading></Loading>,
+            },
+            {
+                path: 'my-donation-requests',
+                element: <MyDonationRequests></MyDonationRequests>
             },
         ]
     },
