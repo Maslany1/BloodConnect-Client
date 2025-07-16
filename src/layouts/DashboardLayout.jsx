@@ -14,7 +14,7 @@ const DashboardLayout = () => {
     if (loading) {
         return <Loading></Loading>;
     }
-    console.log("role -donor", role);
+    // console.log("role -donor", role);
 
     return (
         <div className="drawer lg:drawer-open">
@@ -84,20 +84,16 @@ const DashboardLayout = () => {
                     {!loading && role === 'admin' && <>
 
                         <li>
-                            <NavLink to="/dashboard/all-user">
+                            <NavLink to="/dashboard/all-users">
                                 All Users
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard/">
-                                Create Donation
+                            <NavLink to="/dashboard/all-blood-donation-request">
+                                All Blood Donation Request
                             </NavLink>
                         </li>
                     </>}
-
-
-
-
                 </ul>
             </div>
         </div>

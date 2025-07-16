@@ -17,6 +17,8 @@ import Forbidden from "../pages/shared/Forbidden";
 import DonorRoute from "../provider/DonorRoute";
 import AdminRoute from "../provider/AdminRoute";
 import AllUsersPage from "../pages/Dashboard/AllUsersPage";
+import AllBloodDonationPage from "../pages/Dashboard/AllBloodDonationPage";
+import AdminEditDonationRequest from "../pages/Dashboard/AdminEditDonationRequest";
 
 const router = createBrowserRouter([
     {
@@ -71,7 +73,6 @@ const router = createBrowserRouter([
                 // loader: () => fetch('http://localhost:3000/allUsers'),
                 // hydrateFallbackElement: <Loading></Loading>,
             },
-            
             {
                 path: 'donation-details/:id',
                 element: <DonorRoute><DonationRequestDetails></DonationRequestDetails></DonorRoute>,
@@ -81,8 +82,16 @@ const router = createBrowserRouter([
                 element: <DonorRoute><EditDonationRequest></EditDonationRequest></DonorRoute>,
             },
             {
-                path: 'all-user',
+                path: 'all-users',
                 element: <AdminRoute><AllUsersPage></AllUsersPage></AdminRoute>,
+            },
+            {
+                path: 'all-blood-donation-request',
+                element: <AdminRoute><AllBloodDonationPage></AllBloodDonationPage></AdminRoute>,
+            },
+            {
+                path: 'admin-edit-donation/:id',
+                element: <AdminRoute><AdminEditDonationRequest></AdminEditDonationRequest></AdminRoute>,
             },
 
 

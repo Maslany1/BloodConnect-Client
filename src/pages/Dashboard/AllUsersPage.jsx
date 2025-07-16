@@ -3,10 +3,14 @@ import useAxios from '../../hooks/useAxios';
 import { FaUserShield, FaUserCheck, FaUserSlash, FaTrashAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
+const USERS_PER_PAGE = 5;
+
 const AllUsersPage = () => {
     const axiosInstance = useAxios();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [statusFilter, setStatusFilter] = useState('all');
 
     useEffect(() => {
         fetchUsers();
@@ -26,12 +30,7 @@ const AllUsersPage = () => {
     const handleRoleChange = async (id, newRole) => {
         try {
             await axiosInstance.patch(`/allUsers/role/${id}`, { user_role: newRole });
-            Swal.fire({
-                icon: "success",
-                title: "Role Updated !",
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            Swal.fire({ icon: "success", title: "Role Updated!", showConfirmButton: false, timer: 1000 });
             fetchUsers();
         } catch (error) {
             console.error('Error updating role:', error);
@@ -41,12 +40,7 @@ const AllUsersPage = () => {
     const handleStatusChange = async (id, newStatus) => {
         try {
             await axiosInstance.patch(`/allUsers/status/${id}`, { user_status: newStatus });
-            Swal.fire({
-                icon: "success",
-                title: "Status Updated !",
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            Swal.fire({ icon: "success", title: "Status Updated!", showConfirmButton: false, timer: 1000 });
             fetchUsers();
         } catch (error) {
             console.error('Error updating status:', error);
@@ -73,57 +67,80 @@ const AllUsersPage = () => {
         }
     };
 
+    const filteredUsers = statusFilter === 'all' ? users : users.filter(u => u.user_status === statusFilter);
+    const totalPages = Math.ceil(filteredUsers.length / USERS_PER_PAGE);
+    const paginatedUsers = filteredUsers.slice((currentPage - 1) * USERS_PER_PAGE, currentPage * USERS_PER_PAGE);
+
+    const renderStatusIcon = (status) => status === 'active' ? <FaUserCheck className="text-green-500" /> : <FaUserSlash className="text-red-500" />;
+
     if (loading) return <div className="text-center mt-10">Loading...</div>;
 
     return (
         <div className="p-4">
             <h2 className="text-3xl font-bold mb-6">All Users</h2>
+            <div className="mb-4">
+                <label>Status Filter:</label>
+                <select className="select select-bordered ml-2" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+                    <option value="all">All</option>
+                    <option value="active">Active</option>
+                    <option value="blocked">Blocked</option>
+                </select>
+            </div>
+
             <div className="overflow-x-auto">
                 <table className="table table-zebra w-full">
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Avatar</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Blood Group</th>
-                            <th>Location</th>
                             <th>Role</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th className='text-center'>Current Status</th>
+                            <th className='text-center'>Change Status</th>
+                            <th className='text-center'>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) => (
+                        {paginatedUsers.map((user, index) => (
                             <tr key={user._id}>
-                                <td>{index + 1}</td>
+                                <td>{(currentPage - 1) * USERS_PER_PAGE + index + 1}</td>
+                                <td>
+                                    <img src={user.user_photo_url} alt="avatar" className="w-10 h-10 rounded-full" />
+                                </td>
                                 <td>{user.user_full_name}</td>
                                 <td>{user.user_email}</td>
-                                <td>{user.user_blood_group}</td>
-                                <td>{user.user_district}, {user.user_upazila}</td>
                                 <td>
                                     <select
                                         className="select select-sm"
                                         value={user.user_role}
                                         onChange={(e) => handleRoleChange(user._id, e.target.value)}
                                     >
-                                        <option value="admin">Admin</option>
                                         <option value="donor">Donor</option>
                                         <option value="volunteer">Volunteer</option>
+                                        <option value="admin">Admin</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select
-                                        className="select select-sm"
-                                        value={user.user_status}
-                                        onChange={(e) => handleStatusChange(user._id, e.target.value)}
-                                    >
-                                        <option value="active">Active</option>
-                                        <option value="blocked">Blocked</option>
-                                    </select>
+                                    <div className="flex justify-center items-center gap-2">
+                                        {renderStatusIcon(user.user_status)}
+                                        <span>{user.user_status}</span>
+                                    </div>
                                 </td>
-                                <td className="flex gap-2">
+                                <td className='text-center'>
+                                    {user.user_status === 'active' ? (
+                                        <button className="btn btn-xs btn-outline" onClick={() => handleStatusChange(user._id, 'blocked')}>
+                                            Block
+                                        </button>
+                                    ) : (
+                                        <button className="btn btn-xs btn-outline" onClick={() => handleStatusChange(user._id, 'active')}>
+                                            Unblock
+                                        </button>
+                                    )}
+                                </td>
+                                <td className='text-center'>
                                     <button
-                                        className="btn btn-sm btn-error"
+                                        className="btn btn-xs btn-outline btn-error"
                                         onClick={() => handleDelete(user._id)}
                                     >
                                         <FaTrashAlt />
@@ -133,6 +150,19 @@ const AllUsersPage = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-6 gap-2">
+                {[...Array(totalPages)].map((_, idx) => (
+                    <button
+                        key={idx}
+                        className={`btn btn-sm ${currentPage === idx + 1 ? 'btn-primary' : 'btn-ghost'}`}
+                        onClick={() => setCurrentPage(idx + 1)}
+                    >
+                        {idx + 1}
+                    </button>
+                ))}
             </div>
         </div>
     );

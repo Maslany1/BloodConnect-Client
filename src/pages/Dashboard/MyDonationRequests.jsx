@@ -114,8 +114,8 @@ const MyDonationRequests = () => {
                                 <td>
                                     {req.donation_status === 'inprogress' && (
                                         <div>
-                                            <p>{user.displayName}</p>
-                                            <p className="text-sm">{user.email}</p>
+                                            <p>{req.requester_name}</p>
+                                            <p className="text-sm">{req.requester_email}</p>
                                         </div>
                                     )}
                                 </td>
