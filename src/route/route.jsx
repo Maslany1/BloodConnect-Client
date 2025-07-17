@@ -23,6 +23,9 @@ import MultiRoleRoute from "../provider/MultiRoleRoute";
 import SearchPage from "../pages/Search/SearchPage";
 import BloodDonationRequest from "../pages/BloodDonationRequest/BloodDonationRequest";
 import HomeDonationRequestDetails from "../pages/HomeDonationRequestDetails/HomeDonationRequestDetails";
+import AddBlogPage from "../pages/Dashboard/AddBlogPage";
+import BlogList from "../pages/Dashboard/BlogList";
+import BlogDetails from "../pages/Dashboard/BlogDetails";
 
 const router = createBrowserRouter([
     {
@@ -112,6 +115,19 @@ const router = createBrowserRouter([
                 path: 'admin-edit-donation/:id',
                 element: <AdminRoute><AdminEditDonationRequest></AdminEditDonationRequest></AdminRoute>,
             },
+            {
+                path:'content-management/add-blogs',
+                element: <AdminRoute><AddBlogPage></AddBlogPage></AdminRoute>,
+            },
+            {
+                path: 'blogs',
+                element: <AdminRoute><BlogList></BlogList></AdminRoute>,
+            },
+            {
+                path: 'blogs/:id',
+                element: <AdminRoute><BlogDetails></BlogDetails></AdminRoute>,
+            },
+
             // {
             //     path: ''
             // },

@@ -96,6 +96,17 @@ const DashboardLayout = () => {
                                 All Blood Donation Request
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/dashboard/content-management/add-blogs">
+                                Add Blogs
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/blogs">
+                                View Blog Lists
+                            </NavLink>
+                        </li>
+
                     </>}
 
                     {/* volunteer pages */}
