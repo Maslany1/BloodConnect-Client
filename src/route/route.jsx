@@ -9,7 +9,6 @@ import PrivateRoute from "../provider/PrivateRoute";
 import Profile from "../pages/Dashboard/Profile";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest";
-import DonorDashboard from "../pages/Dashboard/DonorDashboard";
 import MyDonationRequests from "../pages/Dashboard/MyDonationRequests";
 import DonationRequestDetails from "../pages/Dashboard/DonationRequestDetails";
 import EditDonationRequest from "../pages/Dashboard/EditDonationRequest";
@@ -24,12 +23,12 @@ import SearchPage from "../pages/Search/SearchPage";
 import BloodDonationRequest from "../pages/BloodDonationRequest/BloodDonationRequest";
 import HomeDonationRequestDetails from "../pages/HomeDonationRequestDetails/HomeDonationRequestDetails";
 import AddBlogPage from "../pages/Dashboard/AddBlogPage";
-import BlogList from "../pages/Dashboard/BlogList";
 import BlogDetails from "../pages/Dashboard/BlogDetails";
 import ContentManagementPage from "../pages/Dashboard/ContentManagementPage";
 import EditBlogPage from "../pages/Dashboard/EditBlogPage";
 import PublicBlogList from "../pages/Blogs/PublicBlogList";
 import PublicBlogDetails from "../pages/Blogs/PublicBlogDetails";
+import FundingPage from "../pages/FundingPage/FundingPage";
 
 const router = createBrowserRouter([
     {
@@ -41,8 +40,6 @@ const router = createBrowserRouter([
                 index: true,
                 path: '/',
                 element: <Home></Home>,
-                // loader: () => fetch('https://btobridge-server.vercel.app/publicAllProducts'),
-                // hydrateFallbackElement: <Loading></Loading>,
             },
             {
                 path: 'search',
@@ -65,6 +62,10 @@ const router = createBrowserRouter([
                 element: <PublicBlogDetails></PublicBlogDetails>,
             },
             {
+                path: 'funds',
+                element: <PrivateRoute><FundingPage></FundingPage></PrivateRoute>,
+            },
+            {
                 path: "login",
                 element: <Login></Login>,
             },
@@ -83,16 +84,14 @@ const router = createBrowserRouter([
         element: <PrivateRoute>
             <DashboardLayout></DashboardLayout>
         </PrivateRoute>,
-
         children: [
             {
                 index: true,
-                element: <DashboardHome></DashboardHome>
-                // element: <DonorDashboard></DonorDashboard>
+                element: <DashboardHome></DashboardHome>,
             },
             {
                 path: 'profile',
-                element: <Profile></Profile>
+                element: <Profile></Profile>,
             },
             {
                 path: 'my-donation-requests',
@@ -101,8 +100,6 @@ const router = createBrowserRouter([
             {
                 path:'create-donation-request',
                 element: <DonorRoute><CreateDonationRequest></CreateDonationRequest></DonorRoute>,
-                // loader: () => fetch('http://localhost:3000/allUsers'),
-                // hydrateFallbackElement: <Loading></Loading>,
             },
             {
                 path: 'donation-details/:id',
@@ -149,19 +146,7 @@ const router = createBrowserRouter([
                 element: <MultiRoleRoute allowedRoles={['admin', 'volunteer']}>
                     <EditBlogPage></EditBlogPage>
                 </MultiRoleRoute>,
-            },
-            // {
-            //     path: 'content-management-page/blogs',
-            //     element: <AdminRoute><BlogList></BlogList></AdminRoute>,
-            // },
-            
-
-            // {
-            //     path: ''
-            // },
-
-
-            
+            },  
         ]
     },
     // {

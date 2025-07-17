@@ -1,7 +1,10 @@
 import React from 'react';
+import { use } from 'react';
 import { Link, NavLink } from 'react-router';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const Footer = () => {
+    const { user } = use(AuthContext);
     return (
         <div className='max-w-[1600px] mx-auto'>
             <div className='flex flex-col gap-4 justify-between items-center px-20 py-20 bg-black'>
@@ -14,10 +17,10 @@ const Footer = () => {
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/search">Search</NavLink>
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/blood-donation-request">Donation Request</NavLink>
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/blogs">Blogs</NavLink>
-                    {/* <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/myProducts">My Products</NavLink>
-                    <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/cart">Cart Page</NavLink> */}
+                    {
+                        user && <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/funds">Funds</NavLink>
+                    }   
                 </div>
-
                 <div className=' flex justify-center items-center gap-4 text-white'>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
