@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import Loading from '../shared/Loading';
+import Swal from 'sweetalert2';
 
 const PublicBlogDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxios();
   const [blog, setBlog] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBlog = async () => {
       try {
         const res = await axiosInstance.get(`/publicBlogs/${id}`);
         setBlog(res.data);
-      } catch (err) {
-        console.error('Error loading blog', err);
+      } catch (error) {
+        // console.error('Error loading blog', err);
+        if (error.response && error.response.status === 500) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Server Error',
+            text: 'Server error occurred. Please try again later.',
+          });
+          navigate('/blogs');
+        }
       }
     };
     fetchBlog();

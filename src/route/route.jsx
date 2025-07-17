@@ -29,6 +29,7 @@ import EditBlogPage from "../pages/Dashboard/EditBlogPage";
 import PublicBlogList from "../pages/Blogs/PublicBlogList";
 import PublicBlogDetails from "../pages/Blogs/PublicBlogDetails";
 import FundingPage from "../pages/FundingPage/FundingPage";
+import Payment from "../pages/FundingPage/Payment";
 
 const router = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
             {
                 path: 'funds',
                 element: <PrivateRoute><FundingPage></FundingPage></PrivateRoute>,
+            },
+            {
+                path: 'funds/payment',
+                element: <PrivateRoute><Payment></Payment></PrivateRoute>,
             },
             {
                 path: "login",

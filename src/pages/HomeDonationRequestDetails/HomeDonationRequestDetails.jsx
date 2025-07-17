@@ -20,8 +20,16 @@ const HomeDonationRequestDetails = () => {
       try {
         const res = await axiosInstance.get(`/donation-requests/${id}`);
         setRequest(res.data);
-      } catch (err) {
-        console.error('Error fetching request:', err);
+      } catch (error) {
+        // console.error('Error fetching request:', err);
+        if (error.response && error.response.status === 500) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Server Error',
+            text: 'Server error occurred. Please try again later.',
+          });
+          navigate('/blood-donation-request');
+        }
       } finally {
         setLoading(false);
       }

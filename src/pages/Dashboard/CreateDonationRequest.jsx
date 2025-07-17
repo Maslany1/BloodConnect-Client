@@ -7,6 +7,7 @@ import useAxios from '../../hooks/useAxios';
 import { use } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import useUserStatus from '../../hooks/useUserStatus';
+import { useNavigate } from 'react-router';
 
 const CreateDonationRequest = () => {
 
@@ -15,6 +16,7 @@ const CreateDonationRequest = () => {
     const axiosInstance = useAxios();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const uniqueDistricts = districtData[2].data.map(({ id, name }) => ({ id, name }));
@@ -54,6 +56,8 @@ const CreateDonationRequest = () => {
             const res = await axiosInstance.post('/donation-requests', request);
             if (res.data.insertedId) {
                 Swal.fire('Success', 'Donation request created successfully!', 'success');
+
+                navigate('/dashboard/my-donation-requests');
             }
         } catch (error) {
             console.error(error);

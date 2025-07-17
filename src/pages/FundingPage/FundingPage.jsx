@@ -33,14 +33,14 @@ const FundingPage = () => {
     const totalPages = Math.ceil(funds.length / itemsPerPage);
 
     return (
-        <div className="p-6 max-w-6xl mx-auto">
+        <div className="p-6 max-w-6xl mx-auto min-h-screen">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold">Funding Records</h2>
-                <button className="btn btn-primary" onClick={() => navigate('/dashboard/fund-payment')}>Give Fund</button>
+                <button className="btn btn-primary" onClick={() => navigate('/funds/payment')}>Give Fund</button>
             </div>
 
             {loading ? <Loading></Loading> : (
-                <div className="overflow-x-auto min-h-screen">
+                <div className="overflow-x-auto">
                     <table className="table table-zebra w-full">
                         <thead>
                             <tr>
@@ -49,16 +49,18 @@ const FundingPage = () => {
                                 <th>Email</th>
                                 <th>Amount</th>
                                 <th>Date</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentFunds.map((fund, index) => (
                                 <tr key={fund._id}>
                                     <td>{indexOfFirstItem + index + 1}</td>
-                                    <td>{fund.user_name}</td>
-                                    <td>{fund.user_email}</td>
+                                    <td>{fund.name}</td>
+                                    <td>{fund.email}</td>
                                     <td>${fund.amount}</td>
-                                    <td>{new Date(fund.created_at).toLocaleDateString()}</td>
+                                    <td>{new Date(fund.paid_at).toLocaleDateString('en-AU')}</td>
+                                    <td>{new Date(fund.paid_at).toLocaleTimeString('en-AU')}</td>
                                 </tr>
                             ))}
                         </tbody>

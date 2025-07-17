@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import useAxios from '../../hooks/useAxios';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
@@ -8,6 +9,13 @@ const SearchPage = () => {
     const axiosInstance = useAxios();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
+    const [form, setForm] = useState({
+        bloodGroup: '',
+        district: '',
+        upazila: '',
+    });
+    const [submittedForm, setSubmittedForm] = useState(null);
+
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
     useEffect(() => {
@@ -17,38 +25,30 @@ const SearchPage = () => {
         setUpazilas(uniqueUpazila);
     }, []);
 
-    const [form, setForm] = useState({
-        bloodGroup: '',
-        district: '',
-        upazila: '',
+    const { data: donors = [], isFetching, refetch } = useQuery({
+        queryKey: ['donors', submittedForm],
+        queryFn: async () => {
+            const res = await axiosInstance.get('/search', {
+                params: {
+                    blood_group: submittedForm.bloodGroup,
+                    district: submittedForm.district,
+                    upazila: submittedForm.upazila
+                }
+            });
+            return res.data;
+        },
+        enabled: false // only run on manual trigger
     });
-
-    const [donors, setDonors] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSearch = async (e) => {
+    const handleSearch = (e) => {
         e.preventDefault();
-        setLoading(true);
-
-        try {
-            const res = await axiosInstance.get('/search', {
-                params: {
-                    blood_group: form.bloodGroup,
-                    district: form.district,
-                    upazila: form.upazila
-                }
-            });
-            setDonors(res.data);
-        } catch (err) {
-            console.error("Search failed", err);
-        } finally {
-            setLoading(false);
-        }
+        setSubmittedForm({ ...form });
+        refetch();
     };
 
     const selectedDistrict = districts.find(d => d.name === form.district);
@@ -58,7 +58,7 @@ const SearchPage = () => {
 
     return (
         <div className="max-w-5xl mx-auto p-6">
-            <h2 className="text-3xl font-bold mb-6 text-center">Find Blood Donor 🩸</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center">Find Blood Donor 🧨</h2>
 
             <form onSubmit={handleSearch} className="grid md:grid-cols-3 gap-4 mb-8">
                 <select
@@ -87,7 +87,6 @@ const SearchPage = () => {
                     ))}
                 </select>
 
-
                 <select
                     name="upazila"
                     className="select select-bordered w-full"
@@ -105,9 +104,9 @@ const SearchPage = () => {
                 <button type="submit" className="btn btn-primary col-span-full md:col-span-3">Search</button>
             </form>
 
-            {loading && <Loading></Loading>}
+            {isFetching && <Loading />}
 
-            {!loading && donors.length > 0 && (
+            {!isFetching && donors.length > 0 && (
                 <div className='min-h-screen'>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {donors.map(donor => (
@@ -131,12 +130,10 @@ const SearchPage = () => {
                 </div>
             )}
 
-            {!loading && donors.length === 0 && (
+            {!isFetching && donors.length === 0 && submittedForm && (
                 <div className='min-h-screen'>
-                    <p className="text-center text-gray-500 mt-6">No donors found. Try different criteria.
-                        <br />
-                        eg. (Blood Group: A+, District: Comilla, Upazila: Comilla Sadar)
-                    </p>
+                    <p className="text-center text-gray-500 mt-6">No donors found. Try different criteria.<br />
+                        eg. (Blood Group: A+, District: Comilla, Upazila: Comilla Sadar)</p>
                 </div>
             )}
         </div>

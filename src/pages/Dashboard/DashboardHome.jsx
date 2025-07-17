@@ -5,7 +5,6 @@ import DonorDashboard from './DonorDashboard';
 import { use } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import AdminDashboard from './AdminDashboard';
-import VolunteerDashboard from './VolunteerDashboard';
 import Forbidden from '../shared/Forbidden';
 
 const DashboardHome = () => {
@@ -17,15 +16,11 @@ const DashboardHome = () => {
     if (roleLoading) {
         return <Loading></Loading>;
     }
-
     if (role === 'donor') {
         return <DonorDashboard></DonorDashboard>
     }
-    else if (role === 'admin') {
+    else if (role === 'admin' || role === 'volunteer') {
         return <AdminDashboard></AdminDashboard>
-    }
-    else if (role === 'volunteer') {
-        return <VolunteerDashboard></VolunteerDashboard>
     }
     else {
         return <Forbidden></Forbidden>

@@ -13,11 +13,10 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // , fundsRes, requestsRes
-        const [userRes] = await Promise.all([
+        const [userRes, fundsRes, requestsRes] = await Promise.all([
           axiosInstance.get('/allUsers'),
-        //   axiosInstance.get('/donation-funds'),
-        //   axiosInstance.get('/donation-requests'),
+          axiosInstance.get('/funds'),
+          axiosInstance.get('/admin-donation-requests'),
         ]);
 
         // Count only donors
@@ -25,10 +24,10 @@ const AdminDashboard = () => {
         setTotalUsers(donors.length);
 
         // Sum funds
-        // const total = fundsRes.data.reduce((acc, curr) => acc + Number(curr.amount || 0), 0);
-        // setTotalFunds(total);
+        const total = fundsRes.data.reduce((acc, curr) => acc + Number(curr.amount || 0), 0);
+        setTotalFunds(total);
 
-        // setTotalRequests(requestsRes.data.length);
+        setTotalRequests(requestsRes.data.total);
       } catch (error) {
         console.error('Failed to load admin stats:', error);
       }
