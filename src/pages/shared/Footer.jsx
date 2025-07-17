@@ -13,8 +13,8 @@ const Footer = () => {
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/">Home</NavLink>
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/search">Search</NavLink>
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/blood-donation-request">Donation Request</NavLink>
-                    {/* <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/allProducts">All Products</NavLink>
-                    <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/myProducts">My Products</NavLink>
+                    <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/blogs">Blogs</NavLink>
+                    {/* <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/myProducts">My Products</NavLink>
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/cart">Cart Page</NavLink> */}
                 </div>
 

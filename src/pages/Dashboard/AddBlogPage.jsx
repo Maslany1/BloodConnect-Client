@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import JoditEditor from 'jodit-react';
 import useAxios from '../../hooks/useAxios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const AddBlogPage = () => {
     const { register, handleSubmit, reset } = useForm();
@@ -10,6 +11,7 @@ const AddBlogPage = () => {
     const [content, setContent] = useState('');
     const [imageURL, setImageURL] = useState('');
     const [uploading, setUploading] = useState(false);
+    const navigate = useNavigate();
 
     const imageBBKey = import.meta.env.VITE_image_upload_key;
 
@@ -30,6 +32,7 @@ const AddBlogPage = () => {
                 reset();
                 setContent('');
                 setImageURL('');
+                navigate('/dashboard/content-management-page');
             }
         } catch (err) {
             console.error('Blog creation failed:', err);

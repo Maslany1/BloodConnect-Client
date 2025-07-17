@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import Loading from '../shared/Loading';
 
-const BlogDetails = () => {
+const PublicBlogDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxios();
   const [blog, setBlog] = useState(null);
@@ -11,7 +11,7 @@ const BlogDetails = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axiosInstance.get(`/blogs/${id}`);
+        const res = await axiosInstance.get(`/publicBlogs/${id}`);
         setBlog(res.data);
       } catch (err) {
         console.error('Error loading blog', err);
@@ -34,4 +34,4 @@ const BlogDetails = () => {
   );
 };
 
-export default BlogDetails;
+export default PublicBlogDetails;

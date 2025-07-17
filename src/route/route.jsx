@@ -28,6 +28,8 @@ import BlogList from "../pages/Dashboard/BlogList";
 import BlogDetails from "../pages/Dashboard/BlogDetails";
 import ContentManagementPage from "../pages/Dashboard/ContentManagementPage";
 import EditBlogPage from "../pages/Dashboard/EditBlogPage";
+import PublicBlogList from "../pages/Blogs/PublicBlogList";
+import PublicBlogDetails from "../pages/Blogs/PublicBlogDetails";
 
 const router = createBrowserRouter([
     {
@@ -55,15 +57,23 @@ const router = createBrowserRouter([
                 element: <PrivateRoute><HomeDonationRequestDetails></HomeDonationRequestDetails></PrivateRoute>,
             },
             {
-                path: "/login",
+                path: 'blogs',
+                element: <PublicBlogList></PublicBlogList>,
+            },
+            {
+                path: 'blogs/:id',
+                element: <PublicBlogDetails></PublicBlogDetails>,
+            },
+            {
+                path: "login",
                 element: <Login></Login>,
             },
             {
-                path: "/register",
+                path: "register",
                 element: <Register></Register>,
             },
             {
-                path: '/forbidden',
+                path: 'forbidden',
                 element: <Forbidden></Forbidden>,
             }
         ]
