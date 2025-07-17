@@ -13,13 +13,7 @@ const PaymentForm = () => {
     const navigate = useNavigate();
     const axiosInstance = useAxios();
     const [amountError, setAmountError] = useState("");
-
     const [error, setError] = useState('');
-
-
-
-    // const amount = 80;
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +22,6 @@ const PaymentForm = () => {
             setAmountError("Invalid amount");
             return;
         }
-
 
         const amountInCents = amount * 100;
         if (!stripe || !elements) {
@@ -41,7 +34,6 @@ const PaymentForm = () => {
             return;
         }
 
-        // step- 1: validate the card
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card
@@ -54,14 +46,12 @@ const PaymentForm = () => {
             setError('');
             console.log('payment method', paymentMethod);
 
-            // step-2: create payment intent
             const res = await axiosInstance.post('/create-payment-intent', {
                 amountInCents,
             })
 
             const clientSecret = res.data.clientSecret;
 
-            // step-3: confirm payment
             const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: elements.getElement(CardElement),
@@ -79,7 +69,7 @@ const PaymentForm = () => {
                 if (result.paymentIntent.status === 'succeeded') {
                     console.log('Payment succeeded!');
                     const transactionId = result.paymentIntent.id;
-                    // step-4 mark parcel paid also create payment history
+
                     const paymentData = {
                         name: user.displayName,
                         email: user.email,
@@ -90,18 +80,13 @@ const PaymentForm = () => {
 
                     const paymentRes = await axiosInstance.post('/funds', paymentData);
                     if (paymentRes.data.insertedId) {
-
-                        // ✅ Show SweetAlert with transaction ID
                         await Swal.fire({
                             icon: 'success',
                             title: 'Payment Successful!',
                             html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
                             confirmButtonText: 'Go to Funds',
                         });
-
-                        // ✅ Redirect to /myParcels
                         navigate('/funds');
-
                     }
                 }
             }
@@ -126,7 +111,7 @@ const PaymentForm = () => {
                     className="btn btn-primary text-white w-full"
                     disabled={!stripe}
                 >
-                    Pay {/* Pay ${amount} */}
+                    Pay
                 </button>
                 {
                     error && <p className='text-red-500'>{error}</p>

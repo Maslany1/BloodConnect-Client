@@ -1,39 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import Loading from '../shared/Loading';
+import { useQuery } from '@tanstack/react-query';
 
 const BloodDonationRequest = () => {
   const axiosInstance = useAxios();
-  const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const res = await axiosInstance.get('/public-donation-requests?status=pending');
-        setRequests(res.data);
-      } catch (err) {
-        console.error('Error fetching donation requests:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRequests();
-  }, [axiosInstance]);
+  const { data: requests = [], isLoading, isError, error } = useQuery({
+    queryKey: ['pending-donation-requests'],
+    queryFn: async () => {
+      const res = await axiosInstance.get('/public-donation-requests?status=pending');
+      return res.data;
+    },
+    staleTime: 1000 * 60 * 2,
+  });
 
   const handleViewDetails = (id) => {
     navigate(`/home-donation-request-details/${id}`);
   };
 
-  if (loading) return <Loading></Loading>;
+  if (isLoading) return <Loading />;
+  if (isError) {
+    console.error("Failed to load donation requests:", error);
+    return (
+      <p className="text-center text-red-500">
+        Failed to load donation requests. Please try again later.
+      </p>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 text-center">Pending Blood Donation Requests 🩸</h2>
-        
+
       {requests.length === 0 ? (
         <p className="text-center text-gray-500">No pending requests found.</p>
       ) : (
@@ -48,7 +49,10 @@ const BloodDonationRequest = () => {
                 <p><strong>Time:</strong> {req.donation_time}</p>
               </div>
               <div className="mt-4">
-                <button onClick={() => handleViewDetails(req._id)} className="btn btn-primary btn-sm w-full">
+                <button
+                  onClick={() => handleViewDetails(req._id)}
+                  className="btn btn-primary btn-sm w-full"
+                >
                   View Details
                 </button>
               </div>

@@ -37,7 +37,7 @@ const SearchPage = () => {
             });
             return res.data;
         },
-        enabled: false // only run on manual trigger
+        enabled: false
     });
 
     const handleChange = (e) => {
