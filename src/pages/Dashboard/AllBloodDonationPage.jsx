@@ -36,7 +36,7 @@ const AllBloodDonationPage = () => {
     };
 
     if (roleLoading) {
-        return <Loading />;
+        return <Loading></Loading>;
     }
 
     const handleStatusChange = async (id, newStatus) => {
@@ -79,7 +79,7 @@ const AllBloodDonationPage = () => {
 
     const totalPages = Math.ceil(filteredDonations.length / itemsPerPage);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading></Loading>;
 
     return (
         <div className="p-4">

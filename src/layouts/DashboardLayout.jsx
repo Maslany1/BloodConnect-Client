@@ -97,16 +97,10 @@ const DashboardLayout = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard/content-management/add-blogs">
-                                Add Blogs
+                            <NavLink to="/dashboard/content-management-page">
+                                Content Management Page
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/dashboard/blogs">
-                                View Blog Lists
-                            </NavLink>
-                        </li>
-
                     </>}
 
                     {/* volunteer pages */}
@@ -114,6 +108,11 @@ const DashboardLayout = () => {
                         <li>
                             <NavLink to="/dashboard/all-blood-donation-request">
                                 All Blood Donation Request
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/content-management-page">
+                                Content Management Page
                             </NavLink>
                         </li>
                         {/* <li>

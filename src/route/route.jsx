@@ -26,6 +26,8 @@ import HomeDonationRequestDetails from "../pages/HomeDonationRequestDetails/Home
 import AddBlogPage from "../pages/Dashboard/AddBlogPage";
 import BlogList from "../pages/Dashboard/BlogList";
 import BlogDetails from "../pages/Dashboard/BlogDetails";
+import ContentManagementPage from "../pages/Dashboard/ContentManagementPage";
+import EditBlogPage from "../pages/Dashboard/EditBlogPage";
 
 const router = createBrowserRouter([
     {
@@ -109,24 +111,40 @@ const router = createBrowserRouter([
                 element: <MultiRoleRoute allowedRoles={['admin', 'volunteer']}>
                     <AllBloodDonationPage></AllBloodDonationPage>
                 </MultiRoleRoute>,
-                // element: <AdminRoute><AllBloodDonationPage></AllBloodDonationPage></AdminRoute>,
             },
             {
                 path: 'admin-edit-donation/:id',
                 element: <AdminRoute><AdminEditDonationRequest></AdminEditDonationRequest></AdminRoute>,
             },
             {
-                path:'content-management/add-blogs',
-                element: <AdminRoute><AddBlogPage></AddBlogPage></AdminRoute>,
+                path: 'content-management-page',
+                element: <MultiRoleRoute allowedRoles={['admin', 'volunteer']}>
+                    <ContentManagementPage></ContentManagementPage>
+                </MultiRoleRoute>,
             },
             {
-                path: 'blogs',
-                element: <AdminRoute><BlogList></BlogList></AdminRoute>,
+                path:'content-management-page/add-blogs',
+                element: <MultiRoleRoute allowedRoles={['admin', 'volunteer']}>
+                    <AddBlogPage></AddBlogPage>
+                </MultiRoleRoute>,
             },
             {
-                path: 'blogs/:id',
-                element: <AdminRoute><BlogDetails></BlogDetails></AdminRoute>,
+                path: 'content-management-page/blogs/:id',
+                element: <MultiRoleRoute allowedRoles={['admin', 'volunteer']}>
+                    <BlogDetails></BlogDetails>
+                </MultiRoleRoute>,
             },
+            {
+                path:'content-management-page/edit-blog/:id',
+                element: <MultiRoleRoute allowedRoles={['admin', 'volunteer']}>
+                    <EditBlogPage></EditBlogPage>
+                </MultiRoleRoute>,
+            },
+            // {
+            //     path: 'content-management-page/blogs',
+            //     element: <AdminRoute><BlogList></BlogList></AdminRoute>,
+            // },
+            
 
             // {
             //     path: ''
