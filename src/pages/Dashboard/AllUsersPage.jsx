@@ -32,8 +32,12 @@ const AllUsersPage = () => {
       Swal.fire({ icon: 'success', title: 'Role Updated!', showConfirmButton: false, timer: 1000 });
       refetchUsers();
     } catch (error) {
-      console.error('Error updating role:', error);
-      Swal.fire('Error', 'Failed to update role.', 'error');
+      Swal.fire({
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 
@@ -43,8 +47,12 @@ const AllUsersPage = () => {
       Swal.fire({ icon: 'success', title: 'Status Updated!', showConfirmButton: false, timer: 1000 });
       refetchUsers();
     } catch (error) {
-      console.error('Error updating status:', error);
-      Swal.fire('Error', 'Failed to update status.', 'error');
+      Swal.fire({
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 
@@ -63,8 +71,12 @@ const AllUsersPage = () => {
         Swal.fire('Deleted!', 'User has been deleted.', 'success');
         refetchUsers();
       } catch (error) {
-        console.error('Error deleting user:', error);
-        Swal.fire('Error', 'Failed to delete user.', 'error');
+        Swal.fire({
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     }
   };

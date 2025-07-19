@@ -53,8 +53,12 @@ const AdminEditDonationRequest = () => {
         navigate('/dashboard/all-blood-donation-request');
       }
     } catch (error) {
-      console.error(error);
-      Swal.fire('Error', 'Failed to update donation request.', 'error');
+      Swal.fire({
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 

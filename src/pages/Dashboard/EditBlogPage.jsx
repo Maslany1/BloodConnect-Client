@@ -29,7 +29,12 @@ const EditBlogPage = () => {
                     content: blog.content
                 });
             } catch (error) {
-                console.error('Failed to load blog:', error);
+                Swal.fire({
+                    icon: "error",
+                    title: error.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             } finally {
                 setLoading(false);
             }
@@ -50,8 +55,12 @@ const EditBlogPage = () => {
             Swal.fire('Success', 'Blog updated successfully!', 'success');
             navigate('/dashboard/content-management-page');
         } catch (err) {
-            console.error('Update failed:', err);
-            Swal.fire('Error', 'Failed to update blog', 'error');
+            Swal.fire({
+                icon: "error",
+                title: err,
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     };
 

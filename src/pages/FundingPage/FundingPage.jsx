@@ -24,11 +24,11 @@ const FundingPage = () => {
     },
     retry: 1,
     onError: (error) => {
-      console.error('Failed to load funds:', error);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Unable to load funding data. Try again later.',
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
       });
     },
   });
@@ -51,7 +51,7 @@ const FundingPage = () => {
       </div>
 
       {isLoading ? (
-        <Loading />
+        <Loading></Loading>
       ) : isError ? (
         <p className="text-red-500 text-center">Something went wrong.</p>
       ) : (
@@ -89,9 +89,8 @@ const FundingPage = () => {
           {[...Array(totalPages).keys()].map((num) => (
             <button
               key={num}
-              className={`join-item btn btn-sm ${
-                currentPage === num + 1 ? 'btn-active' : ''
-              }`}
+              className={`join-item btn btn-sm ${currentPage === num + 1 ? 'btn-active' : ''
+                }`}
               onClick={() => setCurrentPage(num + 1)}
             >
               {num + 1}

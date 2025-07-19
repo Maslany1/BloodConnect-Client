@@ -7,6 +7,7 @@ import { AuthContext } from '../../provider/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loading from '../shared/Loading';
 
 const Profile = () => {
   const { user: currentUser, updateUserProfile } = useContext(AuthContext);
@@ -82,7 +83,7 @@ const Profile = () => {
     }
   };
 
-  if (isLoading || !user) return <p className="text-center">Loading profile...</p>;
+  if (isLoading || !user) return <Loading></Loading>;
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">

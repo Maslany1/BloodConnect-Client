@@ -44,7 +44,7 @@ const PaymentForm = () => {
         }
         else {
             setError('');
-            console.log('payment method', paymentMethod);
+            //console.log('payment method', paymentMethod);
 
             const res = await axiosSecure.post('/create-payment-intent', {
                 amountInCents,
@@ -67,7 +67,7 @@ const PaymentForm = () => {
             } else {
                 setError('');
                 if (result.paymentIntent.status === 'succeeded') {
-                    console.log('Payment succeeded!');
+                    //console.log('Payment succeeded!');
                     const transactionId = result.paymentIntent.id;
 
                     const paymentData = {

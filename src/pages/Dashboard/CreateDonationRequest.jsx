@@ -8,6 +8,7 @@ import { AuthContext } from '../../provider/AuthProvider';
 import useUserStatus from '../../hooks/useUserStatus';
 import { useNavigate } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loading from '../shared/Loading';
 
 const CreateDonationRequest = () => {
 
@@ -36,9 +37,7 @@ const CreateDonationRequest = () => {
     const filteredUpazilas = upazilas.filter(u => u.district_id === selectedDistrict?.id);
 
     const { status, loading } = useUserStatus(user?.email);
-    if (loading) return <p>Checking user status...</p>;
-
-    // console.log(status,loading);
+    if (loading) return <Loading></Loading>;
 
     const onSubmit = async (data) => {
         if (status !== 'active') {
@@ -60,8 +59,12 @@ const CreateDonationRequest = () => {
                 navigate('/dashboard/my-donation-requests');
             }
         } catch (error) {
-            console.error(error);
-            Swal.fire('Error', 'Something went wrong while creating request.', 'error');
+            Swal.fire({
+                icon: "error",
+                title: error,
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     };
 

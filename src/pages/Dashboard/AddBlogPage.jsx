@@ -35,8 +35,12 @@ const AddBlogPage = () => {
                 navigate('/dashboard/content-management-page');
             }
         } catch (err) {
-            console.error('Blog creation failed:', err);
-            Swal.fire('Error', 'Failed to create blog', 'error');
+            Swal.fire({
+                icon: "error",
+                title: err,
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     };
 
@@ -58,7 +62,12 @@ const AddBlogPage = () => {
                 setImageURL(imgData.data.url);
             }
         } catch (err) {
-            console.error('Image upload failed:', err);
+            Swal.fire({
+                icon: "error",
+                title: err,
+                showConfirmButton: false,
+                timer: 1500
+            });
         } finally {
             setUploading(false);
         }

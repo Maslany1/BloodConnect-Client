@@ -52,8 +52,12 @@ const EditDonationRequest = () => {
         navigate('/dashboard/my-donation-requests');
       }
     } catch (error) {
-      console.error(error);
-      Swal.fire('Error', 'Failed to update donation request.', 'error');
+      Swal.fire({
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 

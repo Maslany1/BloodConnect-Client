@@ -36,7 +36,12 @@ const MyDonationRequests = () => {
           await axiosSecure.delete(`/donation-requests/${id}`);
           refetch();
         } catch (error) {
-          console.error('Delete error:', error);
+          Swal.fire({
+            icon: "error",
+            title: error,
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       }
     });
@@ -47,7 +52,12 @@ const MyDonationRequests = () => {
       await axiosSecure.patch(`/donation-requests/${id}`, { donation_status });
       refetch();
     } catch (error) {
-      console.error('Status update error:', error);
+      Swal.fire({
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 

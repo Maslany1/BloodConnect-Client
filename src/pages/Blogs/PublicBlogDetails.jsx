@@ -34,7 +34,7 @@ const PublicBlogDetails = () => {
     },
   });
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading></Loading>;
 
   if (isError || !blog) {
     Swal.fire({

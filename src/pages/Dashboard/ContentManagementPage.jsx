@@ -38,7 +38,12 @@ const ContentManagementPage = () => {
         'success'
       );
     } catch (err) {
-      console.error('Status update failed:', err);
+      Swal.fire({
+        icon: "error",
+        title: err,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 
@@ -57,13 +62,18 @@ const ContentManagementPage = () => {
         await refetch();
         Swal.fire('Deleted!', 'Blog has been deleted.', 'success');
       } catch (err) {
-        console.error('Delete failed:', err);
+        Swal.fire({
+          icon: "error",
+          title: err,
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     }
   };
 
   if (isLoading || roleLoading) {
-    return <Loading />;
+    return <Loading></Loading>;
   }
 
   const filteredBlogs =
@@ -118,9 +128,8 @@ const ContentManagementPage = () => {
                 <td>{blog.title}</td>
                 <td>
                   <span
-                    className={`badge ${
-                      blog.status === 'published' ? 'badge-success' : 'badge-warning'
-                    }`}
+                    className={`badge ${blog.status === 'published' ? 'badge-success' : 'badge-warning'
+                      }`}
                   >
                     {blog.status}
                   </span>
@@ -178,9 +187,8 @@ const ContentManagementPage = () => {
           {[...Array(totalPages).keys()].map((num) => (
             <button
               key={num}
-              className={`join-item btn btn-sm ${
-                currentPage === num + 1 ? 'btn-active' : ''
-              }`}
+              className={`join-item btn btn-sm ${currentPage === num + 1 ? 'btn-active' : ''
+                }`}
               onClick={() => setCurrentPage(num + 1)}
             >
               {num + 1}

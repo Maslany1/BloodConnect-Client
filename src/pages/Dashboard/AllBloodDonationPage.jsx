@@ -36,7 +36,12 @@ const AllBloodDonationPage = () => {
       await refetch();
       Swal.fire('Success', 'Status updated!', 'success');
     } catch (err) {
-      console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: err,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 
@@ -55,7 +60,12 @@ const AllBloodDonationPage = () => {
         await refetch();
         Swal.fire('Deleted!', 'Request deleted.', 'success');
       } catch (err) {
-        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: err,
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     }
   };
@@ -173,9 +183,8 @@ const AllBloodDonationPage = () => {
             <button
               key={page + 1}
               onClick={() => setCurrentPage(page + 1)}
-              className={`join-item btn btn-sm ${
-                currentPage === page + 1 ? 'btn-active' : ''
-              }`}
+              className={`join-item btn btn-sm ${currentPage === page + 1 ? 'btn-active' : ''
+                }`}
             >
               {page + 1}
             </button>

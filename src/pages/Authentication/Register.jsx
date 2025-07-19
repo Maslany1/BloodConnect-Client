@@ -27,12 +27,8 @@ const Register = () => {
     const navigate = useNavigate();
 
     const uniqueDistrict = districtData[2].data.map(({ id, name }) => ({ id, name }));
-    // console.log(uniqueDistrict);
-
     const uniqueUpazilla = upazilaData[2].data.map(({ id, district_id, name }) => ({ id, district_id, name }));
-    // console.log(uniqueUpazilla);
 
-    // Load JSON data on mount
     useEffect(() => {
         setDistricts(uniqueDistrict);
         setUpazilas(uniqueUpazilla);
@@ -40,7 +36,6 @@ const Register = () => {
 
     // Watch selected district_id
     const selectedDistrictName = watch('district');
-
     const selectedDistrict = uniqueDistrict.find((w) => w.name===selectedDistrictName);
     const selectedDistrictId = selectedDistrict?.id;
 
@@ -64,8 +59,6 @@ const Register = () => {
     }
 
     const onSubmit = data => {
-
-        // console.log(data);
 
         createUser(data.email, data.password)
             .then(async (result) => {
@@ -109,11 +102,9 @@ const Register = () => {
                             });
                     })
                     .catch(error => {
-                        // console.log(error)
-
                         Swal.fire({
                             icon: "error",
-                            title: error.message,
+                            title: error,
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -124,10 +115,9 @@ const Register = () => {
 
             })
             .catch(error => {
-                // console.error(error);
                 Swal.fire({
                     icon: "error",
-                    title: error.message,
+                    title: error,
                     showConfirmButton: false,
                     timer: 1500
                 });

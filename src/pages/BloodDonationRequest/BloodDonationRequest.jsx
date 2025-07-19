@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import Loading from '../shared/Loading';
 import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 const BloodDonationRequest = () => {
   const axiosInstance = useAxios();
@@ -21,14 +22,16 @@ const BloodDonationRequest = () => {
     navigate(`/home-donation-request-details/${id}`);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading></Loading>;
   if (isError) {
-    console.error("Failed to load donation requests:", error);
-    return (
-      <p className="text-center text-red-500">
-        Failed to load donation requests. Please try again later.
-      </p>
-    );
+    Swal.fire({
+      icon: "error",
+      title: error,
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    navigate('/');
   }
 
   return (

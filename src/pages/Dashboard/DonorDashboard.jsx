@@ -30,7 +30,12 @@ const DonorDashboard = () => {
       await axiosSecure.patch(`/donation-requests/${id}`, { donation_status: status });
       queryClient.invalidateQueries(['donationRequests', user?.email]);
     } catch (error) {
-      console.error('Status update failed:', error);
+      Swal.fire({
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 
@@ -47,7 +52,12 @@ const DonorDashboard = () => {
           await axiosSecure.delete(`/donation-requests/${id}`);
           queryClient.invalidateQueries(['donationRequests', user?.email]);
         } catch (error) {
-          console.error('Deletion failed:', error);
+          Swal.fire({
+            icon: "error",
+            title: error,
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       }
     });

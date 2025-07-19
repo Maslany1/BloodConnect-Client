@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../shared/Loading';
+import Swal from 'sweetalert2';
 
 const PublicBlogList = () => {
   const axiosInstance = useAxios();
+  const navigate = useNavigate();
 
   const { data: blogs = [], isLoading, isError, error } = useQuery({
     queryKey: ['publicBlogs'],
@@ -21,12 +23,13 @@ const PublicBlogList = () => {
   }
 
   if (isError) {
-    console.error("Error fetching blogs:", error);
-    return (
-      <p className="text-center text-red-500">
-        Failed to load blogs. Please try again later.
-      </p>
-    );
+    Swal.fire({
+      icon: "error",
+      title: error,
+      showConfirmButton: false,
+      timer: 1500
+    });
+    navigate('/');
   }
 
   return (

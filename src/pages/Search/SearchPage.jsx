@@ -115,7 +115,7 @@ const SearchPage = () => {
                 <button type="submit" className="btn btn-primary col-span-full md:col-span-3">Search</button>
             </form>
 
-            {isFetching && <Loading />}
+            {isFetching && <Loading></Loading>}
 
             {!isFetching && donors.length > 0 && (
                 <div className='min-h-screen'>

@@ -15,7 +15,6 @@ const DashboardLayout = () => {
     if (loading) {
         return <Loading></Loading>;
     }
-    // console.log("role -donor", role);
 
     return (
         <div className="drawer lg:drawer-open">
