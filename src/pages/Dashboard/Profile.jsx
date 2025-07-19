@@ -2,18 +2,18 @@ import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
-import useAxios from '../../hooks/useAxios';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../provider/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Profile = () => {
   const { user: currentUser, updateUserProfile } = useContext(AuthContext);
   const currentUserEmail = currentUser?.email;
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const [editMode, setEditMode] = useState(false);
   const [profilePic, setProfilePic] = useState(currentUser.photoURL);
@@ -25,7 +25,7 @@ const Profile = () => {
     queryKey: ['userProfile', currentUserEmail],
     enabled: !!currentUserEmail,
     queryFn: async () => {
-      const res = await axiosInstance.get('/allUsers');
+      const res = await axiosSecure.get('/allUsers');
       const foundUser = res.data.find((u) => u.user_email === currentUserEmail);
       if (foundUser) {
         // Prefill form fields
@@ -56,7 +56,7 @@ const Profile = () => {
     data.user_photo_url = profilePic;
 
     try {
-      const res = await axiosInstance.put(`/allUsers/${user._id}`, data);
+      const res = await axiosSecure.put(`/allUsers/${user._id}`, data);
       if (res.data.modifiedCount > 0) {
         const userProfile = {
           displayName: data.user_full_name,

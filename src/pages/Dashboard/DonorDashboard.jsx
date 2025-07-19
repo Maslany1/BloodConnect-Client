@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import { useNavigate } from 'react-router';
-import useAxios from '../../hooks/useAxios';
 import Swal from 'sweetalert2';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const DonorDashboard = () => {
   const { user } = useContext(AuthContext);
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -19,7 +19,7 @@ const DonorDashboard = () => {
   } = useQuery({
     queryKey: ['donationRequests', user?.email],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/donation-requests?email=${user.email}`);
+      const res = await axiosSecure.get(`/donation-requests?email=${user.email}`);
       return res.data.slice(0, 3); // Get recent 3
     },
     enabled: !!user?.email,
@@ -27,7 +27,7 @@ const DonorDashboard = () => {
 
   const handleStatusUpdate = async (id, status) => {
     try {
-      await axiosInstance.patch(`/donation-requests/${id}`, { donation_status: status });
+      await axiosSecure.patch(`/donation-requests/${id}`, { donation_status: status });
       queryClient.invalidateQueries(['donationRequests', user?.email]);
     } catch (error) {
       console.error('Status update failed:', error);
@@ -44,7 +44,7 @@ const DonorDashboard = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axiosInstance.delete(`/donation-requests/${id}`);
+          await axiosSecure.delete(`/donation-requests/${id}`);
           queryClient.invalidateQueries(['donationRequests', user?.email]);
         } catch (error) {
           console.error('Deletion failed:', error);

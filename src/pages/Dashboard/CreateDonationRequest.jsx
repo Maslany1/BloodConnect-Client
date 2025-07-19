@@ -3,17 +3,17 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
-import useAxios from '../../hooks/useAxios';
 import { use } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import useUserStatus from '../../hooks/useUserStatus';
 import { useNavigate } from 'react-router';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const CreateDonationRequest = () => {
 
     const { user } = use(AuthContext);
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
-    const axiosInstance = useAxios();
+    const axiosSecure = useAxiosSecure();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const navigate = useNavigate();
@@ -53,7 +53,7 @@ const CreateDonationRequest = () => {
         };
 
         try {
-            const res = await axiosInstance.post('/donation-requests', request);
+            const res = await axiosSecure.post('/donation-requests', request);
             if (res.data.insertedId) {
                 Swal.fire('Success', 'Donation request created successfully!', 'success');
 

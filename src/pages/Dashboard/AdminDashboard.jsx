@@ -1,34 +1,34 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
-import useAxios from '../../hooks/useAxios';
 import { useQueries } from '@tanstack/react-query';
 import { FaUsers, FaHandHoldingUsd, FaTint } from 'react-icons/fa';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const [usersQuery, fundsQuery, requestsQuery] = useQueries({
     queries: [
       {
         queryKey: ['allUsers'],
         queryFn: async () => {
-          const res = await axiosInstance.get('/allUsers');
+          const res = await axiosSecure.get('/allUsers');
           return res.data;
         },
       },
       {
         queryKey: ['funds'],
         queryFn: async () => {
-          const res = await axiosInstance.get('/funds');
+          const res = await axiosSecure.get('/funds');
           return res.data;
         },
       },
       {
         queryKey: ['adminDonationRequests'],
         queryFn: async () => {
-          const res = await axiosInstance.get('/admin-donation-requests');
+          const res = await axiosSecure.get('/admin-donation-requests');
           return res.data;
         },
       },

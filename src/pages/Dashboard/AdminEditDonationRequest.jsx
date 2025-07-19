@@ -4,14 +4,14 @@ import { useParams, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
-import useAxios from '../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AdminEditDonationRequest = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
 
@@ -26,7 +26,7 @@ const AdminEditDonationRequest = () => {
   } = useQuery({
     queryKey: ['donation-request', id],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/donation-requests/${id}`);
+      const res = await axiosSecure.get(`/donation-requests/${id}`);
       return res.data;
     },
     enabled: !!id,
@@ -47,7 +47,7 @@ const AdminEditDonationRequest = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axiosInstance.put(`/donation-requests/${id}`, data);
+      const res = await axiosSecure.put(`/donation-requests/${id}`, data);
       if (res.data.modifiedCount > 0) {
         Swal.fire('Updated', 'Donation request updated successfully!', 'success');
         navigate('/dashboard/all-blood-donation-request');

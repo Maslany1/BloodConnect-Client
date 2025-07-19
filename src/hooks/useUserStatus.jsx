@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
-import useAxios from './useAxios';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from './useAxiosSecure';
 
 const useUserStatus = (email) => {
-  const axiosInstance = useAxios();
-  const [status, setStatus] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const res = await axiosInstance.get(`/allUsers/status?email=${email}`);
-        setStatus(res.data.status);
-      } catch (error) {
-        console.error('Error fetching status:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['userStatus', email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/allUsers/status?email=${email}`);
+      return res.data.status;
+    },
+    enabled: !!email, // only run query if email exists
+    staleTime: 1000 * 60 * 5, // optional: cache for 5 minutes
+  });
 
-    if (email) {
-      fetchStatus();
-    }
-  }, [email]);
-
-  return { status, loading };
+  return {
+    status: data,
+    loading: isLoading,
+    error: isError ? error : null,
+  };
 };
 
 export default useUserStatus;

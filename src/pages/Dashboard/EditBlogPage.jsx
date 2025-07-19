@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import useAxios from '../../hooks/useAxios';
 import JoditEditor from 'jodit-react';
 import Swal from 'sweetalert2';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const EditBlogPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const axiosInstance = useAxios();
+    const axiosSecure = useAxiosSecure();
 
     const [formData, setFormData] = useState({
         title: '',
@@ -21,7 +21,7 @@ const EditBlogPage = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axiosInstance.get(`/blogs/${id}`);
+                const res = await axiosSecure.get(`/blogs/${id}`);
                 const blog = res.data;
                 setFormData({
                     title: blog.title,
@@ -46,7 +46,7 @@ const EditBlogPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axiosInstance.put(`/admin/blogs/${id}`, formData);
+            await axiosSecure.put(`/admin/blogs/${id}`, formData);
             Swal.fire('Success', 'Blog updated successfully!', 'success');
             navigate('/dashboard/content-management-page');
         } catch (err) {
@@ -75,8 +75,8 @@ const EditBlogPage = () => {
                     name="thumbnail"
                     className="input input-bordered w-full"
                     placeholder="Thumbnail URL"
-                    // value={formData.thumbnail}
-                    defaultValue={formData.thumbnail}
+                    value={formData.thumbnail}
+                    // defaultValue={formData.thumbnail}
                     onChange={handleChange}
                     required
                 />

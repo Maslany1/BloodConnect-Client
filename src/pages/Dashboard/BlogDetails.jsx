@@ -1,25 +1,39 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import useAxios from '../../hooks/useAxios';
+import { useNavigate, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../shared/Loading';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const BlogDetails = () => {
   const { id } = useParams();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { data: blog, isLoading, isError, error } = useQuery({
     queryKey: ['blog', id],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/blogs/${id}`);
+      const res = await axiosSecure.get(`/blogs/${id}`);
       return res.data;
     },
     enabled: !!id,
   });
 
   if (isLoading) return <Loading></Loading>;
-  if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>;
-  if (!blog) return <p className="text-center text-gray-500">No blog found.</p>;
+
+  // if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>;
+  // if (!blog) return <p className="text-center text-gray-500">No blog found.</p>;
+
+  if (isError || !blog) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Server Error',
+      text: 'Server error occurred. Please try again later.',
+    });
+    navigate('/dashboard/content-management-page');
+  }
+
+
 
   return (
     <div className="max-w-4xl mx-auto p-6">

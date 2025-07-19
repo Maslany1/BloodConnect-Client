@@ -4,13 +4,14 @@ import { useParams, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
-import useAxios from '../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loading from '../shared/Loading';
 
 const EditDonationRequest = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
 
   const [districts, setDistricts] = useState([]);
@@ -26,7 +27,7 @@ const EditDonationRequest = () => {
   const { data: donationData, isLoading, isError } = useQuery({
     queryKey: ['donationRequest', id],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/donation-requests/${id}`);
+      const res = await axiosSecure.get(`/donation-requests/${id}`);
       return res.data;
     },
     enabled: !!id,
@@ -45,7 +46,7 @@ const EditDonationRequest = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axiosInstance.put(`/donation-requests/${id}`, data);
+      const res = await axiosSecure.put(`/donation-requests/${id}`, data);
       if (res.data.modifiedCount > 0) {
         Swal.fire('Updated', 'Donation request updated successfully!', 'success');
         navigate('/dashboard/my-donation-requests');
@@ -56,7 +57,7 @@ const EditDonationRequest = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center py-8">Loading donation request...</p>;
+  if (isLoading) return <Loading></Loading>;
   if (isError) return <p className="text-center text-red-500">Failed to load data.</p>;
 
   return (

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import useAxios from '../../hooks/useAxios';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import Loading from '../shared/Loading';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const FundingPage = () => {
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +19,7 @@ const FundingPage = () => {
   } = useQuery({
     queryKey: ['funds'],
     queryFn: async () => {
-      const res = await axiosInstance.get('/funds');
+      const res = await axiosSecure.get('/funds');
       return res.data;
     },
     retry: 1,

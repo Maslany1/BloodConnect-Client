@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
-import useAxios from '../../hooks/useAxios';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const MyDonationRequests = () => {
   const { user } = useContext(AuthContext);
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const [filter, setFilter] = useState('all');
@@ -18,7 +18,7 @@ const MyDonationRequests = () => {
     queryKey: ['donationRequests', user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosInstance.get(`/donation-requests?email=${user.email}`);
+      const res = await axiosSecure.get(`/donation-requests?email=${user.email}`);
       return res.data;
     },
   });
@@ -33,7 +33,7 @@ const MyDonationRequests = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axiosInstance.delete(`/donation-requests/${id}`);
+          await axiosSecure.delete(`/donation-requests/${id}`);
           refetch();
         } catch (error) {
           console.error('Delete error:', error);
@@ -44,7 +44,7 @@ const MyDonationRequests = () => {
 
   const handleStatusUpdate = async (id, donation_status) => {
     try {
-      await axiosInstance.patch(`/donation-requests/${id}`, { donation_status });
+      await axiosSecure.patch(`/donation-requests/${id}`, { donation_status });
       refetch();
     } catch (error) {
       console.error('Status update error:', error);

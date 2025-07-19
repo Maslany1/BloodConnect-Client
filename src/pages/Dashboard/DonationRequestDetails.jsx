@@ -1,17 +1,17 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import useAxios from '../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const DonationRequestDetails = () => {
   const { id } = useParams();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const { data: request, isLoading, isError } = useQuery({
     queryKey: ['donationRequest', id],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/donation-requests/${id}`);
+      const res = await axiosSecure.get(`/donation-requests/${id}`);
       return res.data;
     },
     enabled: !!id,

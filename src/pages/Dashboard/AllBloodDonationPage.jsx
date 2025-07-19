@@ -3,15 +3,15 @@ import { useQuery } from '@tanstack/react-query';
 import { FaEye, FaTrash, FaEdit } from 'react-icons/fa';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
-import useAxios from '../../hooks/useAxios';
 import { AuthContext } from '../../provider/AuthProvider';
 import useUserRole from '../../hooks/useUserRole';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AllBloodDonationPage = () => {
   const { user } = useContext(AuthContext);
   const { role, loading: roleLoading } = useUserRole(user?.email);
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -25,14 +25,14 @@ const AllBloodDonationPage = () => {
   } = useQuery({
     queryKey: ['all-donations'],
     queryFn: async () => {
-      const res = await axiosInstance.get('/admin-donation-requests');
+      const res = await axiosSecure.get('/admin-donation-requests');
       return res.data.requests;
     },
   });
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axiosInstance.patch(`/donation-requests/${id}`, { donation_status: newStatus });
+      await axiosSecure.patch(`/donation-requests/${id}`, { donation_status: newStatus });
       await refetch();
       Swal.fire('Success', 'Status updated!', 'success');
     } catch (err) {
@@ -51,7 +51,7 @@ const AllBloodDonationPage = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axiosInstance.delete(`/donation-requests/${id}`);
+        await axiosSecure.delete(`/donation-requests/${id}`);
         await refetch();
         Swal.fire('Deleted!', 'Request deleted.', 'success');
       } catch (err) {

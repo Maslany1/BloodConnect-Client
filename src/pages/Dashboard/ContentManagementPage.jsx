@@ -2,21 +2,20 @@ import React, { useContext, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
-import useAxios from '../../hooks/useAxios';
 import { AuthContext } from '../../provider/AuthProvider';
 import useUserRole from '../../hooks/useUserRole';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const ContentManagementPage = () => {
   const { user } = useContext(AuthContext);
   const { role, loading: roleLoading } = useUserRole(user?.email);
 
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // ✅ Fetch blogs using TanStack Query
   const {
     data: blogs = [],
     isLoading,
@@ -24,14 +23,14 @@ const ContentManagementPage = () => {
   } = useQuery({
     queryKey: ['blogs'],
     queryFn: async () => {
-      const res = await axiosInstance.get('/blogs');
+      const res = await axiosSecure.get('/blogs');
       return res.data;
     },
   });
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axiosInstance.patch(`/admin/blogs/${id}`, { status: newStatus });
+      await axiosSecure.patch(`/admin/blogs/${id}`, { status: newStatus });
       await refetch();
       Swal.fire(
         'Success',
@@ -54,7 +53,7 @@ const ContentManagementPage = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axiosInstance.delete(`/admin/blogs/${id}`);
+        await axiosSecure.delete(`/admin/blogs/${id}`);
         await refetch();
         Swal.fire('Deleted!', 'Blog has been deleted.', 'success');
       } catch (err) {

@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import { use } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
-import useAxios from '../../hooks/useAxios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const { user } = use(AuthContext);
     const navigate = useNavigate();
-    const axiosInstance = useAxios();
+    const axiosSecure = useAxiosSecure();
     const [amountError, setAmountError] = useState("");
     const [error, setError] = useState('');
 
@@ -46,7 +46,7 @@ const PaymentForm = () => {
             setError('');
             console.log('payment method', paymentMethod);
 
-            const res = await axiosInstance.post('/create-payment-intent', {
+            const res = await axiosSecure.post('/create-payment-intent', {
                 amountInCents,
             })
 
@@ -78,7 +78,7 @@ const PaymentForm = () => {
                         paymentMethod: result.paymentIntent.payment_method_types
                     }
 
-                    const paymentRes = await axiosInstance.post('/funds', paymentData);
+                    const paymentRes = await axiosSecure.post('/funds', paymentData);
                     if (paymentRes.data.insertedId) {
                         await Swal.fire({
                             icon: 'success',

@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import useAxios from '../../hooks/useAxios';
 import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
 import Loading from '../shared/Loading';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const HomeDonationRequestDetails = () => {
   const { id } = useParams();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -18,7 +18,7 @@ const HomeDonationRequestDetails = () => {
   const { data: request, isLoading, isError } = useQuery({
     queryKey: ['donation-request', id],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/donation-requests/${id}`);
+      const res = await axiosSecure.get(`/donation-requests/${id}`);
       return res.data;
     },
     retry: false,
@@ -36,7 +36,7 @@ const HomeDonationRequestDetails = () => {
 
   const donateMutation = useMutation({
     mutationFn: async () => {
-      return axiosInstance.patch(`/donation-requests/${id}`, {
+      return axiosSecure.patch(`/donation-requests/${id}`, {
         donation_status: 'inprogress',
         requester_name: user.displayName,
         requester_email: user.email

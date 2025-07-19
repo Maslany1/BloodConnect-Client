@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import useAxios from '../../hooks/useAxios';
 import { FaUserCheck, FaUserSlash, FaTrashAlt, FaEye } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loading from '../shared/Loading';
 
 const USERS_PER_PAGE = 5;
 
 const AllUsersPage = () => {
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,17 +18,17 @@ const AllUsersPage = () => {
   const { data: users = [], isLoading, isError, error } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const res = await axiosInstance.get('/allUsers');
+      const res = await axiosSecure.get('/allUsers');
       return res.data;
     },
-    staleTime: 1000 * 60 * 5, // 5 mins caching for example
+    staleTime: 1000 * 60 * 5, // 5 mins caching
   });
 
   const refetchUsers = () => queryClient.invalidateQueries(['users']);
 
   const handleRoleChange = async (id, newRole) => {
     try {
-      await axiosInstance.patch(`/allUsers/role/${id}`, { user_role: newRole });
+      await axiosSecure.patch(`/allUsers/role/${id}`, { user_role: newRole });
       Swal.fire({ icon: 'success', title: 'Role Updated!', showConfirmButton: false, timer: 1000 });
       refetchUsers();
     } catch (error) {
@@ -38,7 +39,7 @@ const AllUsersPage = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axiosInstance.patch(`/allUsers/status/${id}`, { user_status: newStatus });
+      await axiosSecure.patch(`/allUsers/status/${id}`, { user_status: newStatus });
       Swal.fire({ icon: 'success', title: 'Status Updated!', showConfirmButton: false, timer: 1000 });
       refetchUsers();
     } catch (error) {
@@ -58,7 +59,7 @@ const AllUsersPage = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axiosInstance.delete(`/allUsers/${id}`);
+        await axiosSecure.delete(`/allUsers/${id}`);
         Swal.fire('Deleted!', 'User has been deleted.', 'success');
         refetchUsers();
       } catch (error) {
@@ -68,7 +69,7 @@ const AllUsersPage = () => {
     }
   };
 
-  if (isLoading) return <div className="text-center mt-10">Loading...</div>;
+  if (isLoading) return <Loading></Loading>;
   if (isError) return <div className="text-center mt-10 text-red-500">Error: {error.message}</div>;
 
   const filteredUsers = statusFilter === 'all' ? users : users.filter(u => u.user_status === statusFilter);

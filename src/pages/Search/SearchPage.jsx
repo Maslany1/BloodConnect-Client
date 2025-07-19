@@ -7,6 +7,7 @@ import Loading from '../shared/Loading';
 
 const SearchPage = () => {
     const axiosInstance = useAxios();
+
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [form, setForm] = useState({
@@ -18,6 +19,7 @@ const SearchPage = () => {
 
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
+    // Load static district/upazila data
     useEffect(() => {
         const uniqueDistrict = districtData[2].data.map(({ id, name }) => ({ id, name }));
         const uniqueUpazila = upazilaData[2].data.map(({ id, district_id, name }) => ({ id, district_id, name }));
@@ -25,6 +27,7 @@ const SearchPage = () => {
         setUpazilas(uniqueUpazila);
     }, []);
 
+    // Fetch donors only when submittedForm is set
     const { data: donors = [], isFetching, refetch } = useQuery({
         queryKey: ['donors', submittedForm],
         queryFn: async () => {
@@ -37,18 +40,26 @@ const SearchPage = () => {
             });
             return res.data;
         },
-        enabled: false
+        enabled: false, // manual trigger
     });
 
+    // Trigger refetch after submittedForm is updated
+    useEffect(() => {
+        if (submittedForm) {
+            refetch();
+        }
+    }, [submittedForm, refetch]);
+
+    // Input change handler
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm(prev => ({ ...prev, [name]: value }));
     };
 
+    // Form submit handler
     const handleSearch = (e) => {
         e.preventDefault();
-        setSubmittedForm({ ...form });
-        refetch();
+        setSubmittedForm({ ...form }); // triggers useEffect
     };
 
     const selectedDistrict = districts.find(d => d.name === form.district);
@@ -57,7 +68,7 @@ const SearchPage = () => {
         : [];
 
     return (
-        <div className="max-w-5xl mx-auto p-6">
+        <div className="max-w-5xl mx-auto p-6 min-h-screen">
             <h2 className="text-3xl font-bold mb-6 text-center">Find Blood Donor 🧨</h2>
 
             <form onSubmit={handleSearch} className="grid md:grid-cols-3 gap-4 mb-8">

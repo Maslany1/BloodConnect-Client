@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import JoditEditor from 'jodit-react';
-import useAxios from '../../hooks/useAxios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AddBlogPage = () => {
     const { register, handleSubmit, reset } = useForm();
-    const axiosInstance = useAxios();
+    const axiosSecure = useAxiosSecure();
     const [content, setContent] = useState('');
     const [imageURL, setImageURL] = useState('');
     const [uploading, setUploading] = useState(false);
@@ -25,7 +25,7 @@ const AddBlogPage = () => {
                 created_at: new Date(),
             };
 
-            const res = await axiosInstance.post('/addBlogs', blog);
+            const res = await axiosSecure.post('/addBlogs', blog);
 
             if (res.data.insertedId) {
                 Swal.fire('Success', 'Blog created as draft!', 'success');
