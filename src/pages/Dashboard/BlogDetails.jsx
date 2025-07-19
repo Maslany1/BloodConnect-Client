@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import useAxios from '../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 import Loading from '../shared/Loading';
 
 const BlogDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxios();
-  const [blog, setBlog] = useState(null);
 
-  useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const res = await axiosInstance.get(`/blogs/${id}`);
-        setBlog(res.data);
-      } catch (err) {
-        console.error('Error loading blog', err);
-      }
-    };
-    fetchBlog();
-  }, [id]);
+  const { data: blog, isLoading, isError, error } = useQuery({
+    queryKey: ['blog', id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/blogs/${id}`);
+      return res.data;
+    },
+    enabled: !!id,
+  });
 
-  if (!blog) return <Loading></Loading>;
+  if (isLoading) return <Loading></Loading>;
+  if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>;
+  if (!blog) return <p className="text-center text-gray-500">No blog found.</p>;
 
   return (
     <div className="max-w-4xl mx-auto p-6">

@@ -1,40 +1,49 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import useAxios from '../../hooks/useAxios';
+import { useQueries } from '@tanstack/react-query';
 import { FaUsers, FaHandHoldingUsd, FaTint } from 'react-icons/fa';
+import Loading from '../shared/Loading';
 
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
   const axiosInstance = useAxios();
-  const [totalUsers, setTotalUsers] = useState(0);
-  const [totalFunds, setTotalFunds] = useState(0);
-  const [totalRequests, setTotalRequests] = useState(0);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [userRes, fundsRes, requestsRes] = await Promise.all([
-          axiosInstance.get('/allUsers'),
-          axiosInstance.get('/funds'),
-          axiosInstance.get('/admin-donation-requests'),
-        ]);
+  const [usersQuery, fundsQuery, requestsQuery] = useQueries({
+    queries: [
+      {
+        queryKey: ['allUsers'],
+        queryFn: async () => {
+          const res = await axiosInstance.get('/allUsers');
+          return res.data;
+        },
+      },
+      {
+        queryKey: ['funds'],
+        queryFn: async () => {
+          const res = await axiosInstance.get('/funds');
+          return res.data;
+        },
+      },
+      {
+        queryKey: ['adminDonationRequests'],
+        queryFn: async () => {
+          const res = await axiosInstance.get('/admin-donation-requests');
+          return res.data;
+        },
+      },
+    ],
+  });
 
-        // Count only donors
-        const donors = userRes.data.filter(u => u.user_role === 'donor');
-        setTotalUsers(donors.length);
+  const isLoading = usersQuery.isLoading || fundsQuery.isLoading || requestsQuery.isLoading;
+  const isError = usersQuery.isError || fundsQuery.isError || requestsQuery.isError;
 
-        // Sum funds
-        const total = fundsRes.data.reduce((acc, curr) => acc + Number(curr.amount || 0), 0);
-        setTotalFunds(total);
+  const totalUsers = usersQuery.data?.filter((u) => u.user_role === 'donor')?.length || 0;
+  const totalFunds = fundsQuery.data?.reduce((acc, curr) => acc + Number(curr.amount || 0), 0) || 0;
+  const totalRequests = requestsQuery.data?.total || 0;
 
-        setTotalRequests(requestsRes.data.total);
-      } catch (error) {
-        console.error('Failed to load admin stats:', error);
-      }
-    };
-
-    fetchStats();
-  }, [axiosInstance]);
+  if (isLoading) return <Loading></Loading>;
+  if (isError) return <p className="text-center text-red-500">Failed to load dashboard data.</p>;
 
   return (
     <div className="max-w-6xl mx-auto p-4">

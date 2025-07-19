@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
 import useAxios from '../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
 const EditDonationRequest = () => {
   const { id } = useParams();
@@ -22,22 +23,22 @@ const EditDonationRequest = () => {
     setUpazilas(uniqueUpazilas);
   }, []);
 
-  useEffect(() => {
-    const fetchRequest = async () => {
-      try {
-        const res = await axiosInstance.get(`/donation-requests/${id}`);
-        const data = res.data;
-        for (let key in data) {
-          setValue(key, data[key]);
-        }
-      } catch (error) {
-        console.error('Failed to load donation request:', error);
-        Swal.fire('Error', 'Could not fetch donation request.', 'error');
-      }
-    };
+  const { data: donationData, isLoading, isError } = useQuery({
+    queryKey: ['donationRequest', id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/donation-requests/${id}`);
+      return res.data;
+    },
+    enabled: !!id,
+  });
 
-    fetchRequest();
-  }, [id, axiosInstance, setValue]);
+  useEffect(() => {
+    if (donationData) {
+      Object.entries(donationData).forEach(([key, value]) => {
+        setValue(key, value);
+      });
+    }
+  }, [donationData, setValue]);
 
   const selectedDistrict = districts.find(d => d.name === watch('recipient_district'));
   const filteredUpazilas = upazilas.filter(u => u.district_id === selectedDistrict?.id);
@@ -54,6 +55,9 @@ const EditDonationRequest = () => {
       Swal.fire('Error', 'Failed to update donation request.', 'error');
     }
   };
+
+  if (isLoading) return <p className="text-center py-8">Loading donation request...</p>;
+  if (isError) return <p className="text-center text-red-500">Failed to load data.</p>;
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-4">

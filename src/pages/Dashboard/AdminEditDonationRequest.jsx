@@ -1,43 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import districtData from '../../assets/districts.json';
 import upazilaData from '../../assets/upazilas.json';
 import useAxios from '../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../shared/Loading';
 
 const AdminEditDonationRequest = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosInstance = useAxios();
+
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
 
-  const [districts, setDistricts] = useState([]);
-  const [upazilas, setUpazilas] = useState([]);
+  const districts = districtData[2].data.map(({ id, name }) => ({ id, name }));
+  const upazilas = upazilaData[2].data.map(({ id, district_id, name }) => ({ id, district_id, name }));
+
+  const {
+    data: donationData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['donation-request', id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/donation-requests/${id}`);
+      return res.data;
+    },
+    enabled: !!id,
+  });
 
   useEffect(() => {
-    const uniqueDistricts = districtData[2].data.map(({ id, name }) => ({ id, name }));
-    const uniqueUpazilas = upazilaData[2].data.map(({ id, district_id, name }) => ({ id, district_id, name }));
-    setDistricts(uniqueDistricts);
-    setUpazilas(uniqueUpazilas);
-  }, []);
-
-  useEffect(() => {
-    const fetchRequest = async () => {
-      try {
-        const res = await axiosInstance.get(`/donation-requests/${id}`);
-        const data = res.data;
-        for (let key in data) {
-          setValue(key, data[key]);
+    if (donationData) {
+      for (let key in donationData) {
+        if (donationData.hasOwnProperty(key)) {
+          setValue(key, donationData[key]);
         }
-      } catch (error) {
-        console.error('Failed to load donation request:', error);
-        Swal.fire('Error', 'Could not fetch donation request.', 'error');
       }
-    };
-
-    fetchRequest();
-  }, [id, axiosInstance, setValue]);
+    }
+  }, [donationData, setValue]);
 
   const selectedDistrict = districts.find(d => d.name === watch('recipient_district'));
   const filteredUpazilas = upazilas.filter(u => u.district_id === selectedDistrict?.id);
@@ -54,6 +57,9 @@ const AdminEditDonationRequest = () => {
       Swal.fire('Error', 'Failed to update donation request.', 'error');
     }
   };
+
+  if (isLoading) return <Loading></Loading>;
+  if (isError) return <p className="text-red-500 text-center">Failed to load: {error.message}</p>;
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-4">

@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import useAxios from '../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../shared/Loading';
 
 const DonationRequestDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxios();
-  const [request, setRequest] = useState(null);
 
-  useEffect(() => {
-    const fetchRequest = async () => {
-      try {
-        const res = await axiosInstance.get(`/donation-requests/${id}`);
-        setRequest(res.data);
-      } catch (error) {
-        console.error('Failed to fetch request details:', error);
-      }
-    };
+  const { data: request, isLoading, isError } = useQuery({
+    queryKey: ['donationRequest', id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/donation-requests/${id}`);
+      return res.data;
+    },
+    enabled: !!id,
+  });
 
-    if (id) {
-      fetchRequest();
-    }
-  }, [id]);
-
-  if (!request) return <div className="p-4 text-center">Loading...</div>;
+  if (isLoading) return <Loading></Loading>;
+  if (isError || !request) return <div className="p-4 text-center text-red-500">Failed to load request details.</div>;
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -40,13 +36,13 @@ const DonationRequestDetails = () => {
         <p><strong>Status:</strong> <span className="capitalize">{request.donation_status}</span></p>
         <p className="mt-4"><strong>Message:</strong> {request.request_message}</p>
 
-        {request.donation_status === 'inprogress' && request.donor_name && (
+        {/* {request.donation_status === 'inprogress' && request.donor_name && (
           <div className="mt-4">
             <h4 className="font-semibold">Donor Info:</h4>
             <p><strong>Name:</strong> {request.donor_name}</p>
             <p><strong>Email:</strong> {request.donor_email}</p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

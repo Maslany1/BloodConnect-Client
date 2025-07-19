@@ -40,7 +40,7 @@ const DashboardLayout = () => {
                             </svg>
                         </label>
                     </div>
-                    <div className="mx-2 flex-1 px-2">Dashboard</div>
+                    <div className="text-xl lg:text-2xl mx-2 flex-1 px-2">Blood Connect Dashboard</div>
                     <ProfilePicture></ProfilePicture>
                 </div>
 
@@ -115,11 +115,6 @@ const DashboardLayout = () => {
                                 Content Management Page
                             </NavLink>
                         </li>
-                        {/* <li>
-                            <NavLink to="/dashboard/">
-                                All Blood
-                            </NavLink>
-                        </li> */}
                     </>}
                 </ul>
             </div>

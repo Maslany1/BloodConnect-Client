@@ -3,13 +3,14 @@ import { useParams, useNavigate } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import JoditEditor from 'jodit-react';
 import Swal from 'sweetalert2';
+import Loading from '../shared/Loading';
 
 const EditBlogPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const axiosInstance = useAxios();
 
-    const [form, setForm] = useState({
+    const [formData, setFormData] = useState({
         title: '',
         thumbnail: '',
         content: ''
@@ -22,7 +23,7 @@ const EditBlogPage = () => {
             try {
                 const res = await axiosInstance.get(`/blogs/${id}`);
                 const blog = res.data;
-                setForm({
+                setFormData({
                     title: blog.title,
                     thumbnail: blog.thumbnail,
                     content: blog.content
@@ -39,13 +40,13 @@ const EditBlogPage = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm(prev => ({ ...prev, [name]: value }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axiosInstance.put(`/admin/blogs/${id}`, form);
+            await axiosInstance.put(`/admin/blogs/${id}`, formData);
             Swal.fire('Success', 'Blog updated successfully!', 'success');
             navigate('/dashboard/content-management-page');
         } catch (err) {
@@ -54,7 +55,7 @@ const EditBlogPage = () => {
         }
     };
 
-    if (loading) return <p>Loading blog...</p>;
+    if (loading) return <Loading></Loading>;
 
     return (
         <div className="max-w-4xl mx-auto p-6">
@@ -65,7 +66,7 @@ const EditBlogPage = () => {
                     name="title"
                     className="input input-bordered w-full"
                     placeholder="Blog Title"
-                    value={form.title}
+                    defaultValue={formData.title}
                     onChange={handleChange}
                     required
                 />
@@ -74,13 +75,14 @@ const EditBlogPage = () => {
                     name="thumbnail"
                     className="input input-bordered w-full"
                     placeholder="Thumbnail URL"
-                    value={form.thumbnail}
+                    // value={formData.thumbnail}
+                    defaultValue={formData.thumbnail}
                     onChange={handleChange}
                     required
                 />
                 <JoditEditor
-                    value={form.content}
-                    onBlur={newContent => setForm(prev => ({ ...prev, content: newContent }))}
+                    value={formData.content}
+                    onBlur={newContent => setFormData(prev => ({ ...prev, content: newContent }))}
                 />
                 <button type="submit" className="btn btn-primary">Update Blog</button>
             </form>

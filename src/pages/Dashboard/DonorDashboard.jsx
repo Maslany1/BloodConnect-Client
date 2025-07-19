@@ -1,37 +1,34 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import { useNavigate } from 'react-router';
 import useAxios from '../../hooks/useAxios';
 import Swal from 'sweetalert2';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import Loading from '../shared/Loading';
 
 const DonorDashboard = () => {
   const { user } = useContext(AuthContext);
-  const [donationRequests, setDonationRequests] = useState([]);
   const axiosInstance = useAxios();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchDonorRequests = async () => {
-      try {
-        const res = await axiosInstance.get(`/donation-requests?email=${user.email}`);
-        const recent = res.data.slice(0, 3);
-        setDonationRequests(recent);
-      } catch (error) {
-        console.error('Error fetching donation requests:', error);
-      }
-    };
-
-    if (user?.email) {
-      fetchDonorRequests();
-    }
-  }, [user]);
+  const {
+    data: donationRequests = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['donationRequests', user?.email],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/donation-requests?email=${user.email}`);
+      return res.data.slice(0, 3); // Get recent 3
+    },
+    enabled: !!user?.email,
+  });
 
   const handleStatusUpdate = async (id, status) => {
     try {
       await axiosInstance.patch(`/donation-requests/${id}`, { donation_status: status });
-      setDonationRequests((prev) =>
-        prev.map((item) => (item._id === id ? { ...item, donation_status: status } : item))
-      );
+      queryClient.invalidateQueries(['donationRequests', user?.email]);
     } catch (error) {
       console.error('Status update failed:', error);
     }
@@ -43,18 +40,21 @@ const DonorDashboard = () => {
       text: 'This request will be permanently deleted!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete it!',
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await axiosInstance.delete(`/donation-requests/${id}`);
-          setDonationRequests((prev) => prev.filter((item) => item._id !== id));
+          queryClient.invalidateQueries(['donationRequests', user?.email]);
         } catch (error) {
           console.error('Deletion failed:', error);
         }
       }
     });
   };
+
+  if (isLoading) return <Loading></Loading>;
+  if (isError) return <p className="text-center text-red-500">Failed to load donation requests.</p>;
 
   return (
     <div className="p-4">
