@@ -4,7 +4,7 @@ import { use } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 
 const axiosSecure = axios.create({
-    baseURL: `http://localhost:3000`
+    baseURL: `https://bloodconnect-server.vercel.app`
 });
 
 const useAxiosSecure = () => {

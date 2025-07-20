@@ -2,14 +2,14 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
-import { use } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useContext } from 'react';
 
 const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const { user } = use(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
     const [amountError, setAmountError] = useState("");
@@ -99,7 +99,7 @@ const PaymentForm = () => {
                 <h1 className="text-4xl font-bold my-8">Donation Form !</h1>
                 <label className="input w-full">
                     <span className="label">$</span>
-                    <input name='amount' type="text" placeholder="Donation Amount !" required />
+                    <input name='amount' type="number" placeholder="Donation Amount !" required />
                 </label>
                 {
                     amountError && <p className='text-red-500 text-sm'>{amountError}</p>
