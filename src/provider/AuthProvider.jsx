@@ -1,7 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-
-// import axios from 'axios';
 import app from '../firebase/firebase.config';
 
 export const AuthContext = createContext();
@@ -13,7 +11,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    console.log(user);
+    //console.log(user);
 
     const createUser = (email, password) => {
         setLoading(true);
@@ -42,28 +40,6 @@ const AuthProvider = ({ children }) => {
             unsubscribe();
         };
     }, [])
-
-    // useEffect(() => {
-    //     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //         setUser(currentUser);
-    //         setLoading(false);
-
-    //         if (currentUser) {
-    //             const userData = { email: currentUser.email };
-
-    //             axios.post('https://btobridge-server.vercel.app/jwt', userData, {
-    //                 withCredentials: true,
-    //             })
-    //                 .then(res => {
-    //                     console.log(res.data)
-    //                 })
-    //                 .catch(error => console.log(error));
-    //         }
-    //     });
-    //     return () => {
-    //         unsubscribe();
-    //     };
-    // }, [])
 
     const authData = {
         user,

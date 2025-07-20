@@ -7,6 +7,9 @@ A web application that helps users find and manage blood donors efficiently thro
 ## Live Link
 
 - Please Visit [Blood Connect](https://fahim-arman.netlify.app/) !
+- Admin Name: John Doe
+- Admin Email: john@doe.com
+- Admin Password: 123456As
 
 ## Features of Blood Connect App
 

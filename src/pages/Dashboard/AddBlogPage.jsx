@@ -100,7 +100,7 @@ const AddBlogPage = () => {
                     onBlur={(newContent) => setContent(newContent)}
                 />
 
-                <button type="submit" className="btn btn-primary">Create Blog</button>
+                <button type="submit" className="btn btn-neutral">Create Blog</button>
             </form>
         </div>
     );

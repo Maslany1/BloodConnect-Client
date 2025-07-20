@@ -90,7 +90,7 @@ const Profile = () => {
       <div className="flex justify-between items-start mb-4">
         <div></div>
         <img src={profilePic} alt="avatar" className="w-48 h-48 mt-2 rounded-full border-2 border-zinc-400 mb-8" />
-        <button onClick={() => setEditMode(!editMode)} className="btn btn-sm btn-primary">
+        <button onClick={() => setEditMode(!editMode)} className="btn bg-[#ff4136]">
           {editMode ? 'Cancel' : 'Edit'}
         </button>
       </div>
@@ -143,7 +143,7 @@ const Profile = () => {
 
         {editMode && (
           <div className="col-span-2">
-            <button type="submit" className="btn btn-success">Save Changes</button>
+            <button type="submit" className="btn btn-neutral">Save Changes</button>
           </div>
         )}
       </form>

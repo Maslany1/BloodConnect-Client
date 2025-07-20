@@ -9,7 +9,6 @@ import ProfilePicture from '../pages/shared/ProfilePicture';
 const DashboardLayout = () => {
 
     const { user } = use(AuthContext);
-
     const { role, loading } = useUserRole(user?.email);
 
     if (loading) {

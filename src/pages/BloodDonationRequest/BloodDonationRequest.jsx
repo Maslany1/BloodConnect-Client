@@ -54,7 +54,7 @@ const BloodDonationRequest = () => {
               <div className="mt-4">
                 <button
                   onClick={() => handleViewDetails(req._id)}
-                  className="btn btn-primary btn-sm w-full"
+                  className="btn btn-neutral w-full"
                 >
                   View Details
                 </button>

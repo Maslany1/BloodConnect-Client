@@ -122,7 +122,7 @@ const DonorDashboard = () => {
           </div>
 
           <div className="mt-4">
-            <button onClick={() => navigate('/dashboard/my-donation-requests')} className="btn btn-primary">
+            <button onClick={() => navigate('/dashboard/my-donation-requests')} className="btn btn-neutral">
               View My All Requests
             </button>
           </div>

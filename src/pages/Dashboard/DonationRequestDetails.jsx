@@ -1,12 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../shared/Loading';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const DonationRequestDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { data: request, isLoading, isError } = useQuery({
     queryKey: ['donationRequest', id],
@@ -18,7 +20,14 @@ const DonationRequestDetails = () => {
   });
 
   if (isLoading) return <Loading></Loading>;
-  if (isError || !request) return <div className="p-4 text-center text-red-500">Failed to load request details.</div>;
+  if (isError || !request) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Server Error',
+      text: 'Server error occurred. Please try again later.',
+    });
+    navigate('/dashboard');
+  }
 
   return (
     <div className="p-6 max-w-4xl mx-auto">

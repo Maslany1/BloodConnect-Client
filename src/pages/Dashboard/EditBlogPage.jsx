@@ -35,6 +35,7 @@ const EditBlogPage = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                navigate('/dashboard/content-management-page');
             } finally {
                 setLoading(false);
             }
@@ -61,6 +62,7 @@ const EditBlogPage = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
+            navigate('/dashboard/content-management-page');
         }
     };
 
@@ -93,7 +95,7 @@ const EditBlogPage = () => {
                     value={formData.content}
                     onBlur={newContent => setFormData(prev => ({ ...prev, content: newContent }))}
                 />
-                <button type="submit" className="btn btn-primary">Update Blog</button>
+                <button type="submit" className="btn btn-neutral">Update Blog</button>
             </form>
         </div>
     );

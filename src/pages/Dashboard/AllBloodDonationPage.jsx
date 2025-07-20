@@ -183,7 +183,7 @@ const AllBloodDonationPage = () => {
             <button
               key={page + 1}
               onClick={() => setCurrentPage(page + 1)}
-              className={`join-item btn btn-sm ${currentPage === page + 1 ? 'btn-active' : ''
+              className={`join-item btn ${currentPage === page + 1 ? 'btn-neutral' : 'btn-outline'
                 }`}
             >
               {page + 1}
@@ -221,7 +221,7 @@ const AllBloodDonationPage = () => {
               <strong>Status:</strong> {selectedRequest.donation_status}
             </p>
             <div className="modal-action">
-              <button className="btn" onClick={() => setSelectedRequest(null)}>
+              <button className="btn btn-neutral" onClick={() => setSelectedRequest(null)}>
                 Close
               </button>
             </div>

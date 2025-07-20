@@ -166,6 +166,8 @@ const Register = () => {
 
                         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
 
+                        {/* image upload  */}
+
                         <legend className="fieldset-legend">Upload Photo</legend>
                         <input type="file" onChange={handleImageUpload} className="file-input" required />
                         <label className="label">Max size 32MB</label>

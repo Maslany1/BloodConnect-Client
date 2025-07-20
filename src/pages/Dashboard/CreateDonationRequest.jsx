@@ -142,7 +142,7 @@ const CreateDonationRequest = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                    <button type="submit" className="btn btn-primary w-full">Request</button>
+                    <button type="submit" className="btn btn-neutral w-full">Request</button>
                 </div>
             </form>
         </div>

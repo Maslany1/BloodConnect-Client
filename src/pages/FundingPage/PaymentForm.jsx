@@ -108,7 +108,7 @@ const PaymentForm = () => {
                 </CardElement>
                 <button
                     type='submit'
-                    className="btn btn-primary text-white w-full"
+                    className="btn btn-neutral text-white w-full"
                     disabled={!stripe}
                 >
                     Pay

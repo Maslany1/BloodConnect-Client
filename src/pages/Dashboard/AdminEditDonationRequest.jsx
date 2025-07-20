@@ -59,11 +59,19 @@ const AdminEditDonationRequest = () => {
         showConfirmButton: false,
         timer: 1500
       });
+      navigate('/dashboard/');
     }
   };
 
   if (isLoading) return <Loading></Loading>;
-  if (isError) return <p className="text-red-500 text-center">Failed to load: {error.message}</p>;
+  if (isError) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Server Error',
+      text: 'Server error occurred. Please try again later.',
+    });
+    navigate('/dashboard/all-blood-donation-request');
+  }
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-4">
@@ -127,7 +135,7 @@ const AdminEditDonationRequest = () => {
         </div>
 
         <div className="md:col-span-2">
-          <button type="submit" className="btn btn-primary w-full">Update Request</button>
+          <button type="submit" className="btn btn-neutral w-full">Update Request</button>
         </div>
       </form>
     </div>

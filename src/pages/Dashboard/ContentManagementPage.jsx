@@ -88,7 +88,7 @@ const ContentManagementPage = () => {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold">Content Management 📝</h2>
-        <Link to="/dashboard/content-management-page/add-blogs" className="btn btn-primary">
+        <Link to="/dashboard/content-management-page/add-blogs" className="btn bg-[#ff4136]">
           Add Blog
         </Link>
       </div>
@@ -128,13 +128,13 @@ const ContentManagementPage = () => {
                 <td>{blog.title}</td>
                 <td>
                   <span
-                    className={`badge ${blog.status === 'published' ? 'badge-success' : 'badge-warning'
+                    className={`btn btn-small ${blog.status === 'published' ? 'btn-success' : 'btn-warning'
                       }`}
                   >
                     {blog.status}
                   </span>
                 </td>
-                <td className="flex flex-wrap gap-2">
+                <td className="flex items-center justify-center flex-wrap gap-2">
                   <Link
                     to={`/dashboard/content-management-page/blogs/${blog._id}`}
                     className="btn btn-sm"
@@ -187,7 +187,7 @@ const ContentManagementPage = () => {
           {[...Array(totalPages).keys()].map((num) => (
             <button
               key={num}
-              className={`join-item btn btn-sm ${currentPage === num + 1 ? 'btn-active' : ''
+              className={`join-item btn ${currentPage === num + 1 ? 'btn-neutral' : 'btn-outline'
                 }`}
               onClick={() => setCurrentPage(num + 1)}
             >

@@ -43,7 +43,7 @@ const FundingPage = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold">Funding Records</h2>
         <button
-          className="btn btn-primary"
+          className="btn bg-[#ff4136]"
           onClick={() => navigate('/funds/payment')}
         >
           Give Fund
@@ -89,7 +89,7 @@ const FundingPage = () => {
           {[...Array(totalPages).keys()].map((num) => (
             <button
               key={num}
-              className={`join-item btn btn-sm ${currentPage === num + 1 ? 'btn-active' : ''
+              className={`join-item btn ${currentPage === num + 1 ? 'btn-neutral' : 'btn-outline'
                 }`}
               onClick={() => setCurrentPage(num + 1)}
             >

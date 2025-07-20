@@ -57,8 +57,15 @@ const HomeDonationRequestDetails = () => {
     donateMutation.mutate();
   };
 
-  if (isLoading) return <Loading></Loading> ;
-  if (isError || !request) return <p className="text-center text-red-500">Request not found</p>;
+  if (isLoading) return <Loading></Loading>;
+  if (isError || !request) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Server Error',
+      text: 'Server error occurred. Please try again later.',
+    });
+    navigate('/blood-donation-request');
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-6 min-h-screen">
@@ -76,7 +83,7 @@ const HomeDonationRequestDetails = () => {
       </div>
 
       {request.donation_status === 'pending' && (
-        <button className="btn btn-primary mt-6" onClick={() => setModalOpen(true)}>
+        <button className="btn btn-neutral mt-6" onClick={() => setModalOpen(true)}>
           Donate Now
         </button>
       )}
@@ -91,10 +98,11 @@ const HomeDonationRequestDetails = () => {
               <p><strong>Email:</strong> {user.email}</p>
             </div>
             <div className="modal-action">
-              <button className="btn btn-secondary" onClick={() => setModalOpen(false)}>Cancel</button>
-              <button type="button" className="btn btn-primary" onClick={handleDonateConfirm}>
+              <button type="button" className="btn btn-success" onClick={handleDonateConfirm}>
                 {donateMutation.isLoading ? 'Processing...' : 'Confirm'}
               </button>
+
+              <button className="btn btn-error" onClick={() => setModalOpen(false)}>Cancel</button>
             </div>
           </form>
         </dialog>

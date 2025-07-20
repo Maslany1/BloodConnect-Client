@@ -112,7 +112,7 @@ const SearchPage = () => {
                     ))}
                 </select>
 
-                <button type="submit" className="btn btn-primary col-span-full md:col-span-3">Search</button>
+                <button type="submit" className="btn btn-neutral text-lg col-span-full md:col-span-3">Search</button>
             </form>
 
             {isFetching && <Loading></Loading>}

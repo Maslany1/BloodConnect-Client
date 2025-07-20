@@ -186,7 +186,7 @@ const MyDonationRequests = () => {
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}
-            className={`btn btn-sm ${currentPage === i + 1 ? 'btn-primary' : 'btn-outline'}`}
+            className={`btn ${currentPage === i + 1 ? 'btn-neutral' : 'btn-outline'}`}
             onClick={() => setCurrentPage(i + 1)}
           >
             {i + 1}

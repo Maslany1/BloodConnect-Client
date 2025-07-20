@@ -48,7 +48,7 @@ const PublicBlogList = () => {
                 className="rounded mb-3 h-48 w-full object-cover"
               />
               <h3 className="text-xl font-semibold">{blog.title}</h3>
-              <Link to={`/blogs/${blog._id}`} className="btn btn-sm mt-2">
+              <Link to={`/blogs/${blog._id}`} className="btn btn-neutral mt-2">
                 Read More
               </Link>
             </div>

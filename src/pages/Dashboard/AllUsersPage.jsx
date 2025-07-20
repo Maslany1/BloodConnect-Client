@@ -174,7 +174,7 @@ const AllUsersPage = () => {
         {[...Array(totalPages)].map((_, idx) => (
           <button
             key={idx}
-            className={`btn btn-sm ${currentPage === idx + 1 ? 'btn-primary' : 'btn-ghost'}`}
+            className={`btn btn-sm ${currentPage === idx + 1 ? 'btn-neutral' : 'btn-outline'}`}
             onClick={() => setCurrentPage(idx + 1)}
           >
             {idx + 1}
@@ -213,7 +213,7 @@ const AllUsersPage = () => {
                 </p>
               </div>
               <div className="modal-action">
-                <button className="btn m-4" onClick={() => setSelectedRequest(null)}>
+                <button className="btn btn-neutral m-4" onClick={() => setSelectedRequest(null)}>
                   Close
                 </button>
               </div>

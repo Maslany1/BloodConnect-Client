@@ -2,7 +2,6 @@ import React, { use, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-
 import { AuthContext } from '../../provider/AuthProvider';
 
 const Login = () => {
@@ -12,7 +11,6 @@ const Login = () => {
     const [firebaseError, setFirebaseError] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
-
 
     const onSubmit = data => {
         signIn(data.email, data.password)
