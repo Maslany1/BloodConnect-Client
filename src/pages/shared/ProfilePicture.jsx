@@ -25,7 +25,7 @@ const ProfilePicture = () => {
     }
 
     return (
-        <div className="dropdown dropdown-center md:dropdown-end">
+        <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="m-1">
                 <div className="tooltip tooltip-left" data-tip={user.displayName}>
                     <img className="w-[40px] h-[40px] rounded-full border-2 border-zinc-400" src={`${user.photoURL ? user.photoURL : "https://i.ibb.co/bjvNNZsL/developer-512.jpg"}`} alt="" />

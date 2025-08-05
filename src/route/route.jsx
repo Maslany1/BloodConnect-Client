@@ -30,6 +30,7 @@ import PublicBlogList from "../pages/Blogs/PublicBlogList";
 import PublicBlogDetails from "../pages/Blogs/PublicBlogDetails";
 import FundingPage from "../pages/FundingPage/FundingPage";
 import Payment from "../pages/FundingPage/Payment";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
     {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
             {
                 path: 'funds/payment',
                 element: <PrivateRoute><Payment></Payment></PrivateRoute>,
+            },
+            {
+                path:'/aboutUs',
+                element: <AboutUs></AboutUs>,
             },
             {
                 path: "login",

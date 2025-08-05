@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const RegistrationButtons = () => {
     return (
-        <div className='flex justify-center items-center gap-6'>
+        <div className='hidden lg:flex justify-center items-center gap-4'>
             <Link to="/register">
                 <button className='mr-6 border-2 border-[#ff4136] hover:border-[#333333]  hover:cursor-pointer font-bold text-xl px-6 py-3 rounded-sm bg-[#ff4136]'>Register</button>
             </Link>

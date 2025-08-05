@@ -112,7 +112,7 @@ const ContentManagementPage = () => {
               <th>Thumbnail</th>
               <th>Title</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th className='text-center'>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -126,22 +126,23 @@ const ContentManagementPage = () => {
                   />
                 </td>
                 <td>{blog.title}</td>
-                <td>
+                <td className='text-center'>
                   <span
-                    className={`btn btn-small ${blog.status === 'published' ? 'btn-success' : 'btn-warning'
+                    className={` w-full capitalize btn btn-small ${blog.status === 'published' ? 'btn-success' : 'btn-warning'
                       }`}
                   >
                     {blog.status}
                   </span>
                 </td>
-                <td className="flex items-center justify-center flex-wrap gap-2">
-                  <Link
-                    to={`/dashboard/content-management-page/blogs/${blog._id}`}
-                    className="btn btn-sm"
-                  >
-                    View
-                  </Link>
+                <td className="flex items-center justify-center flex-wrap gap-2 mt-4">
 
+                    <Link
+                      to={`/dashboard/content-management-page/blogs/${blog._id}`}
+                      className="btn btn-sm"
+                    >
+                      View
+                    </Link>
+                
                   <Link
                     to={`/dashboard/content-management-page/edit-blog/${blog._id}`}
                     className="btn btn-sm"

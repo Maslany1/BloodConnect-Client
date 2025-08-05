@@ -19,7 +19,8 @@ const Footer = () => {
                     <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/blogs">Blogs</NavLink>
                     {
                         user && <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/funds">Funds</NavLink>
-                    }   
+                    }
+                    <NavLink className="mr-5 text-lg text-white hover:underline decoration-2" to="/aboutUs">About Us</NavLink>
                 </div>
                 <div className=' flex justify-center items-center gap-4 text-white'>
                     <svg

@@ -11,7 +11,7 @@ const Root = () => {
 
     return (
         <div>
-            <header>
+            <header className='sticky top-0 z-1000 bg-white'>
                 <NavBar></NavBar>
             </header>
 

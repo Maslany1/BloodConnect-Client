@@ -14,6 +14,7 @@ const NavLinks = () => {
             {
                 user && <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/funds">Funds</NavLink>
             }
+            <NavLink className={`mr-8 text-2xl hover:underline decoration-2`} to="/aboutUs">About Us</NavLink>
         </div>
     );
 };
