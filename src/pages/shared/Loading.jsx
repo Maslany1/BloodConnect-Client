@@ -10,8 +10,8 @@ const Loading = () => {
                 <Lottie animationData={loading_blood} />
             </div> */}
 
-            <div className='w-full md:w-1/4'>
-                <img src="https://i.ibb.co/3mgpyXC7/loading.gif" alt="" />
+            <div className='w-full md:w-1/4 flex justify-center items-center'>
+                <img className='max-h-64 my-8' src="https://i.ibb.co/3mgpyXC7/loading.gif" alt="" />
             </div>
 
             <p className='text-5xl text-[#ff4136] mt-20 mb-8 mx-2 text-center'>

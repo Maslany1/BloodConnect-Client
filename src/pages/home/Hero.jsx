@@ -1,6 +1,6 @@
 import React from 'react';
 import Lottie from "lottie-react";
-// import hero_logo from "../../assets/blood_hero.json"
+// import heroLogo from "../../assets/hero.json"
 import { Link } from 'react-router';
 import { use } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
@@ -32,7 +32,7 @@ const Hero = () => {
             </div>
 
             {/* <div className='w-full lg:w-1/3'>
-                <Lottie animationData={hero_logo} />
+                <Lottie animationData={heroLogo} />
             </div> */}
 
             <div className='w-full lg:w-1/3'>
